@@ -31,7 +31,7 @@ void	draw_texture(t_data img)
 	{
 		while (x <= WIDTH)
 		{
-			mlx_put_pixel(&img, x, y, 0x00FF0000+/*((x*255)/WIDTH)+*/((y*65280)/HEIGHT));
+			mlx_put_pixel(&img, x, y, encode_argb(0, 255, 255, (((x+y)/2)*255) / ((WIDTH+HEIGHT)/2)));
 			x++;
 		}
 		x = 0;

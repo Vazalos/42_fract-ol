@@ -17,7 +17,8 @@ CC_FLAGS = -Wall -Wextra -Werror -g
 MLX_FLAGS = -lXext -lX11 -lm
 OBJ_PATH = .obj
 OBJ = $(addprefix $(OBJ_PATH)/, $(notdir $(SRC:.c=.o)))
-SRC = $(SRC_PATH)/main.c
+SRC = $(addprefix $(SRC_PATH)/, main.c \
+	  							color.c)
 SRC_PATH = src
 
 ARC = fractol.a

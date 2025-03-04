@@ -1,39 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractol.h                                          :+:      :+:    :+:   */
+/*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: david-fe <david-fe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 14:51:07 by david-fe          #+#    #+#             */
-/*   Updated: 2025/02/27 14:52:48 by david-fe         ###   ########.fr       */
+/*   Created: 2025/03/04 16:38:56 by david-fe          #+#    #+#             */
+/*   Updated: 2025/03/04 16:39:23 by david-fe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FRACTOL_H
-# define FRACTOL_H
-# include "mlx-linux/mlx.h"
-# include <X11/X.h>
-# include <stdlib.h>
+#include "../fractol.h"
 
-typedef struct s_coord
+int	encode_argb(int a, int r, int g, int b)
 {
-	int x;
-	int y;
-} t_fractal;
+	return (a << 24 | r << 16 | g << 8 | b);
+}
 
-typedef struct	s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-} t_data;
+int	get_t(int argb)
+{
+	return ((argb >> 24) & 0xFF);
+}
 
-int	encode_argb(int a, int r, int g, int b);
-int	get_t(int argb);
-int	get_r(int argb);
-int	get_g(int argb);
-int	get_b(int argb);
+int	get_r(int argb)
+{
+	return ((argb >> 16) & 0xFF);
+}
 
-#endif
+int	get_g(int argb)
+{
+	return ((argb >> 8) & 0xFF);
+}
+
+int	get_b(int argb)
+{
+	return (argb & 0xFF);
+}
+

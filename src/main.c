@@ -13,58 +13,87 @@
 #include "../fractol.h"
 #define WIDTH 1600
 #define HEIGHT 800
+#define MLX_ERROR 1
 
-void	mlx_put_pixel(t_data *img, int x, int y, int color)
+int	free_all(t_data *mlx)
 {
-	char	*dst;
-
-	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
+	mlx_destroy_image(mlx->connect, mlx->img);
+	mlx_destroy_window(mlx->connect, mlx->window);
+	mlx_destroy_display(mlx->connect);
+	free(mlx->connect);
+	return (0);
 }
 
-void	draw_texture(t_data img)
+void	mlx_put_pixel(t_data mlx, int x, int y, int color)
+{
+	char	*pixel_dest;
+
+	if(!mlx.window)
+		return;
+	pixel_dest = mlx.img_addr + (y * mlx.img_line_len + x * (mlx.img_bpp / 8));
+	*(unsigned int *)pixel_dest = color;
+}
+
+int	draw_texture(t_data *mlx)
 {
 	int x = 0;
 	int y = 0;
+	static int i;
 
 	while (y <= HEIGHT)
 	{
 		while (x <= WIDTH)
 		{
-			mlx_put_pixel(&img, x, y, encode_argb(0, 255, 255, (((x+y)/2)*255) / ((WIDTH+HEIGHT)/2)));
+			mlx_put_pixel(*mlx, x, y, encode_argb(0, 0+((i++)/10000), 255, (((x+y)/2)*255) / ((WIDTH+HEIGHT)/2)));
 			x++;
 		}
 		x = 0;
 		y++;
 	}
+	return (0);
 }
+
+int	on_keypress(int keysym, t_data mlx)
+{
+	if(keysym == XK_Escape)
+	{
+		mlx_destroy_image(mlx.connect, mlx.img);
+		mlx_destroy_window(mlx.connect, mlx.window);
+		mlx_destroy_display(mlx.connect);
+		free(mlx.connect);
+	}
+	return (0);
+}
+
+
 
 int	main(void)
 {
-	void	*mlx_connect;
-	void	*mlx_window;
-	t_data	img;
+	t_data	mlx;
 
-	mlx_connect = mlx_init();
-	if (!mlx_connect)
-		return (1);
-	mlx_window = mlx_new_window(mlx_connect, WIDTH, HEIGHT, "test window");
-	if (!mlx_window)
+	mlx.connect = mlx_init();
+	if (!mlx.connect)
+		return (MLX_ERROR);
+	mlx.window = mlx_new_window(mlx.connect, WIDTH, HEIGHT, "ganda fract-ol");
+	if (!mlx.window)
 	{
-		mlx_destroy_display(mlx_window);
-		free(mlx_connect);
-		return (1);
+		free(mlx.connect);
+		return (MLX_ERROR);
 	}
-	img.img = mlx_new_image(mlx_connect, WIDTH, HEIGHT);
-	img.addr = mlx_get_data_addr(
-			img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	//
-	draw_texture(img);
-	//
-	mlx_put_image_to_window(mlx_connect, mlx_window, img.img, 0, 0);
-	mlx_loop(mlx_connect);
-}
+	mlx.img = mlx_new_image(mlx.connect, WIDTH, HEIGHT);
+	mlx.img_addr = mlx_get_data_addr(
+			mlx.img, &mlx.img_bpp, &mlx.img_line_len, &mlx.img_endian);	
 
-	/*
-	mlx_destroy_display(mlx_window);
-	free(mlx_connect);*/
+
+	draw_texture(&mlx);
+	mlx_put_image_to_window(mlx.connect, mlx.window, mlx.img, 0, 0);
+
+	mlx_loop_hook(mlx.connect, draw_texture, &mlx);
+	mlx_loop(mlx.connect);
+}
+/*
+y	mlx_destroy_image(mlx.connect, mlx.img);
+	mlx_destroy_window(mlx.connect, mlx.window);
+	mlx_destroy_display(mlx.connect);
+	free(mlx.connect);
+*/

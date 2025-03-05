@@ -14,24 +14,21 @@
 # define FRACTOL_H
 # include "mlx-linux/mlx.h"
 # include <X11/X.h>
+# include <X11/keysym.h>
 # include <stdlib.h>
 
-typedef struct s_coord
-{
-	int x;
-	int y;
-} t_fractal;
-
 typedef struct	s_data {
+	void	*connect;
+	void	*window;
 	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
+	char	*img_addr;
+	int		img_bpp;
+	int		img_line_len;
+	int		img_endian;
 } t_data;
 
 int	encode_argb(int a, int r, int g, int b);
-int	get_t(int argb);
+int	get_a(int argb);
 int	get_r(int argb);
 int	get_g(int argb);
 int	get_b(int argb);

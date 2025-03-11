@@ -18,7 +18,10 @@ MLX_FLAGS = -lXext -lX11 -lm
 OBJ_PATH = .obj
 OBJ = $(addprefix $(OBJ_PATH)/, $(notdir $(SRC:.c=.o)))
 SRC = $(addprefix $(SRC_PATH)/, main.c \
-	  							color.c)
+								color.c \
+								draw_utils.c \
+								events.c \
+								fractal.c)
 SRC_PATH = src
 
 ARC = fractol.a
@@ -29,13 +32,15 @@ MLX_PATH = mlx-linux
 
 all: $(OBJ_PATH) $(NAME)
 
-$(NAME): $(OBJ) 
-	make -C ${LIBFT_PATH} all
-	cp ${LIBFT} ${ARC}
-	make -C ${MLX_PATH} all
-	cp ${MLX} ${ARC}
+$(NAME): $(OBJ) $(LIBFT) $(MLX) 
 	ar rcs $(ARC) $(OBJ)
-	$(CC) $(CC_FLAGS) $(MLX_FLAGS) $(OBJ) $(MLX) -o $(NAME)
+	$(CC) $(CC_FLAGS) $(MLX_FLAGS) $(OBJ) $(LIBFT) $(MLX) -o $(NAME)
+
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_PATH)
+
+$(MLX):
+	$(MAKE) -C $(MLX_PATH)
 
 $(OBJ_PATH):
 	mkdir $(OBJ_PATH)
@@ -45,9 +50,11 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 
 clean:
 	$(RM) $(OBJ)
+	$(MAKE) -C $(LIBFT_PATH) clean
 
 fclean: clean
 	$(RM) $(NAME)
+	$(MAKE) -C $(LIBFT_PATH) fclean
 
 re: fclean all
 

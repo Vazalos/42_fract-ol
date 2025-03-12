@@ -13,21 +13,21 @@
 #include "../fractol.h"
 
 
-void	ft_render_fractal(int x, int y, t_data *mlx, char **argv)
+void	ft_fractal(int x, int y, t_data *mlx)
 {
-	(void)argv;
-	t_complex_num	z;
-	t_complex_num	c;
-	int				i;
+	t_complex	z;
+	t_complex	c;
+	t_range		new_scale;
+	t_range		old_scale;
 
 	z.x = 0;
 	z.y = 0;
-	c.x = ft_window_scale(x, -2, 2, WIDTH);
-	c.y = ft_window_scale(y, 2, -2, HEIGHT);
-	while(		
-	((z.x * z.x) - (z.y * z.y)) + (2 * );
+	c.x = ft_map(x, mlx->win_xr, mlx->fract_xr);
+	c.y = ft_map(x, mlx->win_yr, mlx->fract_yr);
+	/*while(		
+	((z.x * z.x) - (z.y * z.y)) + (2 * );*/
 }
-
+/*
 int	ft_draw_fractal(t_data *mlx)
 {
 	int	x;
@@ -48,4 +48,4 @@ int	ft_draw_fractal(t_data *mlx)
 		y++;
 	}
 	return (0);
-}
+}*/

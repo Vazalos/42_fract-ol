@@ -20,9 +20,16 @@
 # include <stdio.h>
 # include <math.h>
 
-# define WIDTH 1000
-# define HEIGHT 1000
+# define WIDTH	1000
+# define HEIGHT	1000
 # define MLX_ERROR 1
+
+//COLOR defines
+# define BLACK	0xFF000000
+# define WHITE	0xFFFFFFFF
+# define RED	0xFFFF0000
+# define GREEN	0xFF00FF00
+# define BLUE	0xFF0000FF
 
 typedef struct s_range
 {
@@ -32,22 +39,33 @@ typedef struct s_range
 
 typedef struct s_complex
 {
-	//real axis
-	int		x;
-	//imaginary axis
-	int		y;
+	double	x;
+	double	y;
 }	t_complex;
+
+typedef struct s_img
+{
+	void	*img_ptr;
+	char	*pix_addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}	t_img;
 
 typedef struct s_data
 {
 	void	*connect;
 	void	*window;
 	char	*fractal_name;
-	void	*img;
-	char	*img_addr;
-	int		img_bpp;
-	int		img_line_len;
-	int		img_endian;
+	t_img	img;
+	t_range	win_xr;
+	t_range	win_yr;
+	t_range	fract_xr;
+	t_range	fract_yr;
+	t_range color_range;
+	t_range color_iter;
+	int		max_iterations;
+	int		escape_value;
 }	t_data;
 
 //MAIN.C
@@ -61,7 +79,7 @@ int		ft_get_g(int argb);
 int		ft_get_b(int argb);
 
 //DRAW_UTILS.C
-void	ft_mlx_put_pixel(t_data *mlx, int x, int y, int color);
+void	ft_put_pixel(t_data *mlx, int x, int y, int color);
 int		ft_draw_texture(t_data *mlx);
 int		ft_render_frame(t_data *mlx);
 
@@ -70,10 +88,12 @@ int		ft_on_scroll(int keysym, int x, int y, t_data *mlx);
 int		ft_on_keypress(int keysym, t_data *mlx);
 
 //FRACTAL.C
-void	ft_render_fractal(int x, int y, t_data *mlx, char **argv);
+void	ft_fractal(int x, int y, t_data *mlx);
 
 //MATH_UTILS.C
-double	ft_window_scale(double unscaled_num, double new_min,
-			double new_max, double old_max);
+double	ft_map(double to_scale, t_range old_scale, t_range new_scale);
+
+//INITS.C
+int		ft_init_mlx(t_data *mlx, char *name);
 
 #endif

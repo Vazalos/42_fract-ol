@@ -20,8 +20,10 @@ OBJ = $(addprefix $(OBJ_PATH)/, $(notdir $(SRC:.c=.o)))
 SRC = $(addprefix $(SRC_PATH)/, main.c \
 								color.c \
 								draw_utils.c \
+								math_utils.c \
 								events.c \
-								fractal.c)
+								fractal.c \
+								inits.c)
 SRC_PATH = src
 
 ARC = fractol.a

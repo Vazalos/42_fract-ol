@@ -18,12 +18,12 @@ void	ft_render_fractal(int x, int y, t_data *mlx, char **argv)
 	(void)argv;
 	t_complex_num	z;
 	t_complex_num	c;
-	int				i;		
+	int				i;
+
 	z.x = 0;
 	z.y = 0;
 	c.x = ft_window_scale(x, -2, 2, WIDTH);
 	c.y = ft_window_scale(y, 2, -2, HEIGHT);
-
 	while(		
 	((z.x * z.x) - (z.y * z.y)) + (2 * );
 }

@@ -24,13 +24,19 @@
 # define HEIGHT 1000
 # define MLX_ERROR 1
 
-typedef struct s_complex_num
+typedef struct s_range
+{
+	double	max;
+	double	min;
+}	t_range;
+
+typedef struct s_complex
 {
 	//real axis
 	int		x;
 	//imaginary axis
 	int		y;
-}	t_complex_num;
+}	t_complex;
 
 typedef struct s_data
 {

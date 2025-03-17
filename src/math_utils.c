@@ -17,6 +17,15 @@ double	ft_map(double to_scale, t_range old_scale, t_range new_scale)
 	return ((new_scale.max - new_scale.min) * (to_scale - old_scale.min)
 	/ (old_scale.max - old_scale.min) + new_scale.min);
 }
+
+t_range	ft_range(double min, double max)
+{
+	t_range r;
+
+	r.min = min;
+	r.max = max;
+	return (r);
+}
 /*
 int	main(void)
 {

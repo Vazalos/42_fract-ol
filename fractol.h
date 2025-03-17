@@ -23,6 +23,7 @@
 # define WIDTH	1000
 # define HEIGHT	1000
 # define MLX_ERROR 1
+# define MAX_ITER 50
 
 //COLOR defines
 # define BLACK	0xFF000000
@@ -39,8 +40,8 @@ typedef struct s_range
 
 typedef struct s_complex
 {
-	double	x;
-	double	y;
+	double	xr;
+	double	yi;
 }	t_complex;
 
 typedef struct s_img
@@ -58,10 +59,12 @@ typedef struct s_data
 	void	*window;
 	char	*fractal_name;
 	t_img	img;
-	t_range	win_xr;
-	t_range	win_yr;
-	t_range	fract_xr;
-	t_range	fract_yr;
+	t_complex	z;
+	t_complex	c;
+	t_range	win_xrange;
+	t_range	win_yrange;
+	t_range	fract_xrange;
+	t_range	fract_yrange;
 	t_range color_range;
 	t_range color_iter;
 	int		max_iterations;
@@ -92,8 +95,11 @@ void	ft_fractal(int x, int y, t_data *mlx);
 
 //MATH_UTILS.C
 double	ft_map(double to_scale, t_range old_scale, t_range new_scale);
+t_range	ft_range(double min, double max);
 
 //INITS.C
 int		ft_init_mlx(t_data *mlx, char *name);
+void	ft_init_values(t_data *mlx);
+
 
 #endif

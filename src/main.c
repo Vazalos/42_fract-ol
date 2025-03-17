@@ -32,7 +32,7 @@ int	main(int argc, char **argv)
 		|| (argc == 4 && ft_strncmp(argv[1], "julia", 5) == 0))
 	{
 		ft_init_mlx(&mlx, argv[1]);
-		ft_render_fractal(0, 0, &mlx, argv); //WHAT ARE THE ARGUMENTS #! and #2
+		ft_fractal(0, 0, &mlx); //WHAT ARE THE ARGUMENTS #! and #2
 		ft_render_frame(&mlx);
 		//mlx_loop_hook(mlx.connect, render_frame, &mlx);
 		mlx_mouse_hook(mlx.window, ft_on_scroll, &mlx);

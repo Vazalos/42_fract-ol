@@ -21,28 +21,35 @@ t_range	ft_init_range(double min, double max)
 	return (range);
 }
 
-void ft_init_values(t_data *mlx)
-{
-	mlx->win_xr = ft_init_range(0, WIDTH);
-	mlx->win_yr = ft_init_range(0, HEIGHT);
-	mlx->fract_xr = ft_init_range(-2, 2);
-	mlx->fract_yr = ft_init_range(2, -2);
-	mlx->max_iterations = 42;
-	mlx->color_range = ft_init_range(WHITE, BLACK);
-	mlx->color_iter = ft_init_range(0, mlx->max_iterations);
-}
-
 int	ft_init_mlx(t_data *mlx, char *name)
 {
 	mlx->connect = mlx_init();
 	if (!mlx->connect)
 		return (MLX_ERROR);
 	mlx->fractal_name = name;
+	ft_init_values(mlx);
 	mlx->window = mlx_new_window(mlx->connect, WIDTH, HEIGHT, name);
 	mlx->img.img_ptr = mlx_new_image(mlx->connect, WIDTH, HEIGHT);
-	if (mlx->img.img_ptr || !mlx->window)
+	if (!mlx->img.img_ptr || !mlx->window)
 		ft_free_all(mlx);
 	mlx->img.pix_addr = mlx_get_data_addr(
 			mlx->img.img_ptr, &mlx->img.bpp, &mlx->img.line_len, &mlx->img.endian);
 	return(0);
 }
+
+void ft_init_values(t_data *mlx)
+{
+	mlx->win_xrange = ft_init_range(0, WIDTH);
+	mlx->win_yrange = ft_init_range(0, HEIGHT);
+	mlx->fract_xrange = ft_init_range(-2, 1);
+	mlx->fract_yrange = ft_init_range(1.5, -1.5);
+	mlx->z.xr = 0;
+	mlx->z.yi = 0;
+	mlx->c.xr = 0;
+	mlx->c.yi = 0; 
+	mlx->max_iterations = MAX_ITER;
+	mlx->escape_value = 4;
+	mlx->color_range = ft_init_range(WHITE, BLACK);
+	mlx->color_iter = ft_init_range(0, mlx->max_iterations);
+}
+

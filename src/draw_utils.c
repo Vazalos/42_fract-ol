@@ -34,7 +34,7 @@ int	ft_draw_image(t_data *mlx)
 		while (x <= WIDTH)
 		{
 			ft_fractal(x, y, mlx);
-			//ft_mlx_put_pixel(mlx, x, y, color);
+			//ft_put_pixel(mlx, x, y, WHITE);
 			x++;
 		}
 		x = 0;

@@ -23,11 +23,20 @@ int ft_on_scroll(int keysym, int x, int y, t_data *mlx)
 {
 	(void)x;
 	(void)y;
-	ft_printf("Keyrelease: %d, x %d, y %d\n", keysym, x, y);
 	if(keysym == 4)
-		ft_printf("scroll up\n");
+	{
+		mlx->fract_xrange.min *= 1.25;
+		mlx->fract_xrange.max *= 1.25;
+		mlx->fract_yrange.min *= 1.25;
+		mlx->fract_yrange.max *= 1.25;
+	}
 	if(keysym == 5)
-		ft_printf("scroll down\n");
+	{
+		mlx->fract_xrange.min *= 0.8;
+		mlx->fract_xrange.max *= 0.8;
+		mlx->fract_yrange.min *= 0.8;
+		mlx->fract_yrange.max *= 0.8;
+	}
 	ft_render_frame(mlx);
 	return (0);
 }

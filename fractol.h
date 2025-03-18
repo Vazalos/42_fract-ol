@@ -71,6 +71,7 @@ typedef struct s_data
 	int		escape_val;
 	int		x_offset;
 	int		y_offset;
+	int		zoom_factor;
 }	t_data;
 
 //MAIN.C

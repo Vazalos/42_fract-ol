@@ -21,8 +21,6 @@ void	ft_mandelbrot(int x, int y, t_data *mlx)
 	i = 0;
 	mlx->z.xr = 0;
 	mlx->z.yi = 0;
-	mlx->c.xr = ft_map(x, mlx->win_xrange, mlx->fract_xrange);
-	mlx->c.yi = ft_map(y, mlx->win_yrange, mlx->fract_yrange);
 	while (++i <= mlx->max_iter)
 	{
 		z_tmp = ft_squared(mlx->z.xr) - ft_squared(mlx->z.yi) + mlx->c.xr;

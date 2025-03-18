@@ -12,6 +12,13 @@
 
 #include "../fractol.h"
 
+void	ft_event_handler(t_data *mlx)
+{
+	mlx_mouse_hook(mlx->window, ft_on_scroll, mlx);
+	mlx_hook(mlx->window, KeyPress, KeyPressMask, ft_on_keypress, mlx);
+	mlx_hook(mlx->window, DestroyNotify, 0, ft_free_all, mlx);
+}
+
 int ft_on_scroll(int keysym, int x, int y, t_data *mlx)
 {
 	(void)x;
@@ -26,18 +33,29 @@ int ft_on_scroll(int keysym, int x, int y, t_data *mlx)
 }
 
 int	ft_on_keypress(int keysym, t_data *mlx)
-{    
-	ft_printf("Keyrelease: %d\n", keysym);
+{   
 	if(keysym == XK_Escape)
 		ft_free_all(mlx);
 	if(keysym == XK_Up || keysym == XK_w)
-		ft_printf("UP\n");
+	{		
+		mlx->fract_yrange.min += -0.2;
+		mlx->fract_yrange.max += -0.2;
+	}
 	if(keysym == XK_Down || keysym == XK_s)
-		ft_printf("DOWN\n");
+	{
+		mlx->fract_yrange.min += 0.2;
+		mlx->fract_yrange.max += 0.2;
+	}
 	if(keysym == XK_Left || keysym == XK_a)
-		ft_printf("LEFT\n");
+	{
+		mlx->fract_xrange.min += 0.2;
+		mlx->fract_xrange.max += 0.2;
+	}
 	if(keysym == XK_Right || keysym == XK_d)
-		ft_printf("RIGHT\n");
+	{
+		mlx->fract_xrange.min += -0.2;
+		mlx->fract_xrange.max += -0.2;
+	}
 	ft_render_frame(mlx);
 	return (0);
 }

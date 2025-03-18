@@ -39,17 +39,19 @@ int	ft_init_mlx(t_data *mlx, char *name)
 
 void ft_init_values(t_data *mlx)
 {
+	mlx->x_offset = 0;
+	mlx->y_offset = 0;
 	mlx->win_xrange = ft_init_range(0, WIDTH);
 	mlx->win_yrange = ft_init_range(0, HEIGHT);
-	mlx->fract_xrange = ft_init_range(-2, 1);
-	mlx->fract_yrange = ft_init_range(1.5, -1.5);
+	mlx->fract_xrange = ft_init_range(-2, 2);
+	mlx->fract_yrange = ft_init_range(2, -2);
 	mlx->z.xr = 0;
 	mlx->z.yi = 0;
 	mlx->c.xr = 0;
 	mlx->c.yi = 0; 
-	mlx->max_iterations = MAX_ITER;
-	mlx->escape_value = 4;
+	mlx->max_iter = MAX_ITER;
+	mlx->escape_val = 4;
 	mlx->color_range = ft_init_range(WHITE, BLACK);
-	mlx->color_iter = ft_init_range(0, mlx->max_iterations);
+	mlx->color_iter = ft_init_range(0, mlx->max_iter);
 }
 

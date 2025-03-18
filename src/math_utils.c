@@ -26,6 +26,11 @@ t_range	ft_range(double min, double max)
 	r.max = max;
 	return (r);
 }
+
+double ft_squared(double n)
+{
+	return (n * n);
+}
 /*
 int	main(void)
 {

@@ -67,8 +67,10 @@ typedef struct s_data
 	t_range	fract_yrange;
 	t_range color_range;
 	t_range color_iter;
-	int		max_iterations;
-	int		escape_value;
+	int		max_iter;
+	int		escape_val;
+	int		x_offset;
+	int		y_offset;
 }	t_data;
 
 //MAIN.C
@@ -87,15 +89,17 @@ int		ft_draw_texture(t_data *mlx);
 int		ft_render_frame(t_data *mlx);
 
 //EVENTS.C
+void	ft_event_handler(t_data *mlx);
 int		ft_on_scroll(int keysym, int x, int y, t_data *mlx);
 int		ft_on_keypress(int keysym, t_data *mlx);
 
 //FRACTAL.C
-void	ft_fractal(int x, int y, t_data *mlx);
+void	ft_mandelbrot(int x, int y, t_data *mlx);
 
 //MATH_UTILS.C
 double	ft_map(double to_scale, t_range old_scale, t_range new_scale);
 t_range	ft_range(double min, double max);
+double ft_squared(double n);
 
 //INITS.C
 int		ft_init_mlx(t_data *mlx, char *name);

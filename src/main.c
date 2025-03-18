@@ -32,12 +32,8 @@ int	main(int argc, char **argv)
 		|| (argc == 4 && ft_strncmp(argv[1], "julia", 5) == 0))
 	{
 		ft_init_mlx(&mlx, argv[1]);
-		ft_fractal(0, 0, &mlx); //WHAT ARE THE ARGUMENTS #! and #2
 		ft_render_frame(&mlx);
-		//mlx_loop_hook(mlx.connect, render_frame, &mlx);
-		mlx_mouse_hook(mlx.window, ft_on_scroll, &mlx);
-		mlx_hook(mlx.window, KeyPress, KeyPressMask, ft_on_keypress, &mlx);
-		mlx_hook(mlx.window, DestroyNotify, 0, ft_free_all, &mlx);
+		ft_event_handler(&mlx);
 		mlx_loop(mlx.connect);
 	}
 	else

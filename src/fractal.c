@@ -12,6 +12,17 @@
 
 #include "../fractol.h"
 
+void	ft_visual_range(t_data *mlx)
+{
+	mlx->xr_range.min = ((mlx->min_xr + (mlx->x_offset*mlx->x_100) * mlx->zoom));
+
+	mlx->xr_range.max = ((mlx->max_xr + mlx->x_offset) * mlx->zoom)*(1 - mlx->x_100);
+
+	mlx->yi_range.min = ((mlx->min_yi + mlx->y_offset) * mlx->zoom)*mlx->y_100;
+
+	mlx->yi_range.max = ((mlx->max_yi + mlx->y_offset) * mlx->zoom)*(1 - mlx->y_100);	
+}
+
 void	ft_mandelbrot(int x, int y, t_data *mlx)
 {
 	int			i;
@@ -21,6 +32,8 @@ void	ft_mandelbrot(int x, int y, t_data *mlx)
 	i = 0;
 	mlx->z.xr = 0;
 	mlx->z.yi = 0;
+	mlx->c.xr = ft_map(x, mlx->win_xrange, mlx->xr_range);
+	mlx->c.yi = ft_map(y, mlx->win_yrange, mlx->yi_range);
 	while (++i <= mlx->max_iter)
 	{
 		z_tmp = ft_squared(mlx->z.xr) - ft_squared(mlx->z.yi) + mlx->c.xr;

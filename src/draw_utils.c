@@ -29,6 +29,7 @@ int	ft_draw_image(t_data *mlx)
 
 	x = 0;
 	y = 0;
+
 	while (y <= HEIGHT)
 	{
 		while (x <= WIDTH)
@@ -45,6 +46,7 @@ int	ft_draw_image(t_data *mlx)
 
 int	ft_render_frame(t_data *mlx)
 {
+	ft_visual_range(mlx);
 	ft_draw_image(mlx);
 	mlx_put_image_to_window(mlx->connect, mlx->window, mlx->img.img_ptr, 0, 0);
 	return (0);

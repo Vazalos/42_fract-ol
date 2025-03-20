@@ -55,23 +55,34 @@ typedef struct s_img
 
 typedef struct s_data
 {
-	void	*connect;
-	void	*window;
-	char	*fractal_name;
-	t_img	img;
+	//mlx
+	void		*connect;
+	void		*window;
+	char		*fractal_name;
+	t_img		img;
+	//iterations
 	t_complex	z;
 	t_complex	c;
-	t_range	win_xrange;
-	t_range	win_yrange;
-	t_range	fract_xrange;
-	t_range	fract_yrange;
-	t_range color_range;
-	t_range color_iter;
-	int		max_iter;
-	int		escape_val;
-	int		x_offset;
-	int		y_offset;
-	int		zoom_factor;
+	int			max_iter;
+	int			escape_val;
+	//resolution
+	t_range		win_xrange;
+	t_range		win_yrange;
+	t_range		xr_range;
+	t_range		yi_range;
+	double		min_xr;
+	double		max_xr;
+	double		min_yi;
+	double		max_yi;
+	double		x_offset;
+	double		y_offset;
+	double		zoom;
+	double		scale;
+	double		x_100;
+	double		y_100;
+	//colors
+	t_range		color_range;
+	t_range		color_iter;
 }	t_data;
 
 //MAIN.C
@@ -95,16 +106,16 @@ int		ft_on_scroll(int keysym, int x, int y, t_data *mlx);
 int		ft_on_keypress(int keysym, t_data *mlx);
 
 //FRACTAL.C
+void	ft_visual_range(t_data *mlx);
 void	ft_mandelbrot(int x, int y, t_data *mlx);
 
 //MATH_UTILS.C
 double	ft_map(double to_scale, t_range old_scale, t_range new_scale);
 t_range	ft_range(double min, double max);
-double ft_squared(double n);
+double	ft_squared(double n);
 
 //INITS.C
 int		ft_init_mlx(t_data *mlx, char *name);
 void	ft_init_values(t_data *mlx);
-
 
 #endif

@@ -43,8 +43,12 @@ void ft_init_values(t_data *mlx)
 	mlx->y_offset = 0;
 	mlx->win_xrange = ft_init_range(0, WIDTH);
 	mlx->win_yrange = ft_init_range(0, HEIGHT);
-	mlx->fract_xrange = ft_init_range(-2, 2);
-	mlx->fract_yrange = ft_init_range(2, -2);
+	mlx->min_xr = -2.0;
+	mlx->max_xr = 2.0;
+	mlx->min_yi = -2.0;
+	mlx->max_yi = 2.0;
+	mlx->xr_range = ft_init_range(mlx->min_xr, mlx->max_xr);
+	mlx->yi_range = ft_init_range(mlx->max_yi, mlx->min_yi);
 	mlx->z.xr = 0;
 	mlx->z.yi = 0;
 	mlx->c.xr = 0;
@@ -53,5 +57,9 @@ void ft_init_values(t_data *mlx)
 	mlx->escape_val = 4;
 	mlx->color_range = ft_init_range(WHITE, BLACK);
 	mlx->color_iter = ft_init_range(0, mlx->max_iter);
+	mlx->zoom = 1;
+	mlx->scale = WIDTH/(fabs(mlx->min_xr)+fabs(mlx->max_xr));
+	mlx->x_100 = 0.5;
+	mlx->y_100 = 0.5;
 }
 

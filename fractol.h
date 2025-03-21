@@ -66,6 +66,7 @@ typedef struct s_data
 	int			max_iter;
 	int			escape_val;
 	//resolution
+	double		center;
 	t_range		win_xrange;
 	t_range		win_yrange;
 	t_range		xr_range;
@@ -74,12 +75,15 @@ typedef struct s_data
 	double		max_xr;
 	double		min_yi;
 	double		max_yi;
+	double		mid_xr;
+	double		mid_yi;	
 	double		x_offset;
 	double		y_offset;
 	double		zoom;
-	double		scale;
-	double		x_100;
-	double		y_100;
+	double		x_dist;
+	double		y_dist;
+	double		x_ratio;
+	double		y_ratio;
 	//colors
 	t_range		color_range;
 	t_range		color_iter;

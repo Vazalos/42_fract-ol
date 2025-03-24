@@ -20,7 +20,6 @@ void	ft_put_pixel(t_data *mlx, int x, int y, int color)
 		(y * mlx->img.line_len + x * (mlx->img.bpp / 8));
 	*(unsigned int *)pixel_dest = color;
 }
-# define WHITE 0xFFFFFFFF
 
 int	ft_draw_image(t_data *mlx)
 {

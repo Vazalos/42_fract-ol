@@ -23,7 +23,9 @@
 # define WIDTH	1000
 # define HEIGHT	1000
 # define MLX_ERROR 1
-# define MAX_ITER 50
+# define MAX_ITER 42
+# define ZOOM 1.1
+
 
 //COLOR defines
 # define BLACK	0xFF000000
@@ -67,6 +69,8 @@ typedef struct s_data
 	int			escape_val;
 	//resolution
 	double		center;
+	double		scale_x;
+	double		scale_y;
 	t_range		win_xrange;
 	t_range		win_yrange;
 	t_range		xr_range;
@@ -80,6 +84,7 @@ typedef struct s_data
 	double		x_offset;
 	double		y_offset;
 	double		zoom;
+	double		zoom_level;
 	double		x_dist;
 	double		y_dist;
 	double		x_ratio;

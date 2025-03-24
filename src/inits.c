@@ -47,12 +47,10 @@ void ft_init_values(t_data *mlx)
 	mlx->max_xr = 2.0;
 	mlx->min_yi = -2.0;
 	mlx->max_yi = 2.0;
-	mlx->x_dist = (fabs(mlx->min_xr)+fabs(mlx->max_xr));
-	mlx->y_dist = (fabs(mlx->min_yi)+fabs(mlx->max_yi));
-	mlx->mid_xr = (mlx->x_dist/2)+mlx->min_xr;
-	mlx->mid_yi = (mlx->y_dist/2)+mlx->min_yi;
 	mlx->xr_range = ft_init_range(mlx->min_xr, mlx->max_xr);
 	mlx->yi_range = ft_init_range(mlx->max_yi, mlx->min_yi);
+	mlx->scale_x = (mlx->max_xr - mlx->min_xr)/(WIDTH - 1);
+	mlx->scale_y = (mlx->max_yi - mlx->min_yi)/(HEIGHT - 1);
 	mlx->z.xr = 0;
 	mlx->z.yi = 0;
 	mlx->c.xr = 0;
@@ -61,10 +59,7 @@ void ft_init_values(t_data *mlx)
 	mlx->escape_val = 4;
 	mlx->color_range = ft_init_range(WHITE, BLACK);
 	mlx->color_iter = ft_init_range(0, mlx->max_iter);
-	mlx->zoom = 1;
-	mlx->x_dist = (fabs(mlx->min_xr)+fabs(mlx->max_xr));
-	mlx->y_dist = (fabs(mlx->min_yi)+fabs(mlx->max_yi));
-	mlx->x_ratio = 0.5;
-	mlx->y_ratio = 0.5;
+	mlx->zoom = ZOOM;
+	mlx->zoom_level= mlx->zoom;
 }
 

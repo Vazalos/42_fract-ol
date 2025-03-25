@@ -24,7 +24,7 @@
 # define HEIGHT	1000
 # define MLX_ERROR 1
 # define MAX_ITER 42
-# define ZOOM 1.1
+# define ZOOM 1.4
 
 
 //COLOR defines
@@ -92,6 +92,7 @@ typedef struct s_data
 	//colors
 	t_range		color_range;
 	t_range		color_iter;
+	int			color_profile;
 }	t_data;
 
 //MAIN.C

@@ -50,3 +50,8 @@ int	ft_render_frame(t_data *mlx)
 	mlx_put_image_to_window(mlx->connect, mlx->window, mlx->img.img_ptr, 0, 0);
 	return (0);
 }
+
+void resume_render (t_data *mlx)
+{
+	mlx_loop_hook(mlx->connect, ft_render_frame, mlx);
+}

@@ -35,10 +35,9 @@ void	ft_cursor_offset(int x, int y, t_data *mlx, int zoomin)
 {
 	double	cursor_xr;
 	double	cursor_yi;
-
+	
 	cursor_xr = mlx->min_xr + (x * (mlx->scale_x));
 	cursor_yi = mlx->max_yi - ((WIDTH - y) * (mlx->scale_y));
-	//printf("xPOS %f yPOS %f\n", cursor_xr, cursor_yi);
 	if (zoomin == 0)
 	{
 		mlx->min_xr = cursor_xr + (mlx->min_xr - cursor_xr) * mlx->zoom;
@@ -59,20 +58,39 @@ void	ft_cursor_offset(int x, int y, t_data *mlx, int zoomin)
 		mlx->scale_y = (mlx->max_yi - mlx->min_yi)/(HEIGHT - 1);
 }
 
+void	ft_reset_view (t_data *mlx)
+{
+		mlx->y_offset = 0;
+		mlx->x_offset = 0;
+		mlx->zoom = ZOOM;
+		mlx->zoom_level = mlx->zoom;
+		mlx->min_xr = -2.0;
+		mlx->max_xr = 2.0;
+		mlx->min_yi = -2.0;
+		mlx->max_yi = 2.0;
+		mlx->max_iter = MAX_ITER;
+		mlx->scale_x = (mlx->max_xr - mlx->min_xr)/(WIDTH - 1);
+		mlx->scale_y = (mlx->max_yi - mlx->min_yi)/(HEIGHT - 1);
+}
+
 int ft_on_scroll(int button, int x, int y, t_data *mlx)
 {
 	if(button == 1)
 	{
-		ft_cursor_offset(x, y, mlx, 2);
+		mlx->zoom *= 50;
+		ft_cursor_offset(x, y, mlx, 1);
+		mlx->zoom /= 50;
+	}
+	if(button == 3)
+	{
+		mlx->zoom *= 25;
+		ft_cursor_offset(x, y, mlx, 0);
+		mlx->zoom /= 25;
 	}
 	if(button == 4)
-	{
 		ft_cursor_offset(x, y, mlx, 1);
-	}
 	if(button == 5)
-	{
 		ft_cursor_offset(x, y, mlx, 0);
-	}
 	ft_render_frame(mlx);
 	return (0);
 }
@@ -82,28 +100,24 @@ int	ft_on_keypress(int keysym, t_data *mlx)
 	if(keysym == XK_Escape)
 		ft_free_all(mlx);
 	if(keysym == XK_r)
+		ft_reset_view(mlx);
+	if(keysym == XK_c)
 	{
-		mlx->y_offset = 0;
-		mlx->x_offset = 0;
-		mlx->zoom = ZOOM;
-		mlx->zoom_level = mlx->zoom;
-		mlx->min_xr = -2.0;
-		mlx->max_xr = 2.0;
-		mlx->min_yi = -2.0;
-		mlx->max_yi = 2.0;
+		printf("color change\n");
+		mlx->color_profile = mlx->color_profile + 1;
 	}
 	if(keysym == XK_f)
-		mlx->max_iter += 2;
+		mlx->max_iter += 10 + (mlx->max_iter/10);
 	if(keysym == XK_g)
-		mlx->max_iter -= 2;
+		mlx->max_iter -= 10 + (mlx->max_iter/10);
 	if(keysym == XK_Up || keysym == XK_w)
-		mlx->y_offset -= 0.2 * mlx->zoom_level;
+		mlx->y_offset -= 0.4 * mlx->zoom_level;
 	if(keysym == XK_Down || keysym == XK_s)
-		mlx->y_offset += 0.2 * mlx->zoom_level;
+		mlx->y_offset += 0.4 * mlx->zoom_level;
 	if(keysym == XK_Left || keysym == XK_a)
-		mlx->x_offset -= 0.2 * mlx->zoom_level;
+		mlx->x_offset -= 0.4 * mlx->zoom_level;
 	if(keysym == XK_Right || keysym == XK_d)
-		mlx->x_offset += 0.2 * mlx->zoom_level;
+		mlx->x_offset += 0.4 * mlx->zoom_level;
 	ft_render_frame(mlx);
 	return (0);
 }

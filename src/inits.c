@@ -57,7 +57,7 @@ void ft_init_values(t_data *mlx)
 	mlx->c.yi = 0; 
 	mlx->max_iter = MAX_ITER;
 	mlx->escape_val = 4;
-	mlx->color_profile = 1;
+	mlx->color_profile = 0;
 	mlx->color_range = ft_init_range(WHITE, BLACK);
 	mlx->color_iter = ft_init_range(0, mlx->max_iter);
 	mlx->zoom = ZOOM;

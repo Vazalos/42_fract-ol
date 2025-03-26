@@ -18,7 +18,8 @@ MLX_FLAGS = -lXext -lX11 -lm
 OBJ_PATH = .obj
 OBJ = $(addprefix $(OBJ_PATH)/, $(notdir $(SRC:.c=.o)))
 SRC = $(addprefix $(SRC_PATH)/, main.c \
-								color.c \
+								color_utils.c \
+								color_profiles.c \
 								draw_utils.c \
 								math_utils.c \
 								events.c \

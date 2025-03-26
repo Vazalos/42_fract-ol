@@ -98,12 +98,20 @@ typedef struct s_data
 //MAIN.C
 int		ft_free_all(t_data *mlx);
 
-//COLOR.C
+//COLOR_UTILS.C
 int		ft_encode_argb(int a, int r, int g, int b);
 int		ft_get_a(int argb);
 int		ft_get_r(int argb);
 int		ft_get_g(int argb);
 int		ft_get_b(int argb);
+
+//COLOR_PROFILES.C
+int		ft_color_profile (int i, t_data *mlx);
+int		ft_legacy_color (int i, t_data *mlx);
+int		ft_2nd_color (int i, t_data *mlx);
+int		ft_3rd_color (int i, t_data *mlx);
+int		ft_4th_color (int i, t_data *mlx);
+
 
 //DRAW_UTILS.C
 void	ft_put_pixel(t_data *mlx, int x, int y, int color);

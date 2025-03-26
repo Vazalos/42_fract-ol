@@ -12,35 +12,6 @@
 
 #include "../fractol.h"
 
-int		ft_color_profile(int i, t_data *mlx)
-{
-	int		color;
-
-	if (mlx->color_profile > 3)
-		mlx->color_profile = 0;
-	if (mlx->color_profile == 0) 
-		color = ft_encode_argb(255,
-					ft_map(i, ft_range(0, mlx->max_iter), ft_range(255, 50)),
-					ft_map(i, ft_range(0, mlx->max_iter), ft_range(180, 0)),
-					ft_map(i, ft_range(0, mlx->max_iter), ft_range(255, 200)));
-	if (mlx->color_profile == 1) 
-		color = ft_encode_argb(255,
-					ft_map(i, ft_range(0, mlx->max_iter), ft_range(205, 50)),
-					ft_map(i, ft_range(0, mlx->max_iter), ft_range(20, 190)),
-					ft_map(i, ft_range(0, mlx->max_iter), ft_range(0, 200)));
-	if (mlx->color_profile == 2) 
-				color = ft_encode_argb(255,
-					ft_map(i, ft_range(0, mlx->max_iter), ft_range(60, 0)),
-					ft_map(i, ft_range(0, mlx->max_iter), ft_range(50, 200)),
-					ft_map(i, ft_range(0, mlx->max_iter), ft_range(150, 0)));
-	if (mlx->color_profile == 3) 
-		color = ft_encode_argb(255,
-					ft_map(i, ft_range(0, mlx->max_iter), ft_range(80, 250)),
-					ft_map(i, ft_range(0, mlx->max_iter), ft_range(180, 120)),
-					ft_map(i, ft_range(0, mlx->max_iter), ft_range(120, 0)));
-	return (color);
-}
-
 void	ft_mandelbrot(int x, int y, t_data *mlx)
 {
 	int			i;

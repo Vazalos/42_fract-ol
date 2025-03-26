@@ -21,7 +21,7 @@ int	ft_free_all(t_data *mlx)
 		mlx_destroy_window(mlx->connect, mlx->window);
 	mlx_destroy_display(mlx->connect);
 	free(mlx->connect);
-	return (exit(0), 0);
+	return (exit(0), 0);\
 }
 
 int	main(int argc, char **argv)

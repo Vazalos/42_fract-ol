@@ -90,6 +90,9 @@ typedef struct s_data
 	double		x_ratio;
 	double		y_ratio;
 	//colors
+	double		j;
+	double		k;
+	double		l;
 	t_range		color_range;
 	t_range		color_iter;
 	int			color_profile;

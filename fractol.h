@@ -6,7 +6,7 @@
 /*   By: david-fe <david-fe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:51:07 by david-fe          #+#    #+#             */
-/*   Updated: 2025/02/27 14:52:48 by david-fe         ###   ########.fr       */
+/*   Updated: 2025/03/28 13:06:33 by david-fe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_data
 	void		*connect;
 	void		*window;
 	char		*fractal_name;
+	int			fractal_set;
 	t_img		img;
 	//iterations
 	t_complex	z;
@@ -79,8 +80,6 @@ typedef struct s_data
 	double		max_xr;
 	double		min_yi;
 	double		max_yi;
-	double		mid_xr;
-	double		mid_yi;	
 	double		x_offset;
 	double		y_offset;
 	double		zoom;
@@ -93,13 +92,30 @@ typedef struct s_data
 	double		j;
 	double		k;
 	double		l;
-	t_range		color_range;
-	t_range		color_iter;
 	int			color_profile;
 }	t_data;
 
 //MAIN.C
 int		ft_free_all(t_data *mlx);
+
+//RENDER.C
+void	ft_draw_image(t_data *mlx);
+int		ft_render_frame(t_data *mlx);
+void	ft_resume_render (t_data *mlx);
+
+//FRACTAL.C
+void	ft_mandelbrot(int x, int y, t_data *mlx);
+void	ft_julia(int x, int y, t_data *mlx);
+
+//DRAW_UTILS.C
+void	ft_put_pixel(t_data *mlx, int x, int y, int color);
+void	ft_reset_view (t_data *mlx);
+void	ft_cursor_offset(int x, int y, t_data *mlx, int zoomin);
+
+//EVENTS.C
+void	ft_event_handler(t_data *mlx);
+int		ft_on_scroll(int keysym, int x, int y, t_data *mlx);
+int		ft_on_keypress(int keysym, t_data *mlx);
 
 //COLOR_UTILS.C
 int		ft_encode_argb(int a, int r, int g, int b);
@@ -114,21 +130,6 @@ int		ft_legacy_color (int i, t_data *mlx);
 int		ft_2nd_color (int i, t_data *mlx);
 int		ft_3rd_color (int i, t_data *mlx);
 int		ft_4th_color (int i, t_data *mlx);
-
-
-//DRAW_UTILS.C
-void	ft_put_pixel(t_data *mlx, int x, int y, int color);
-int		ft_draw_texture(t_data *mlx);
-int		ft_render_frame(t_data *mlx);
-
-//EVENTS.C
-void	ft_event_handler(t_data *mlx);
-int		ft_on_scroll(int keysym, int x, int y, t_data *mlx);
-int		ft_on_keypress(int keysym, t_data *mlx);
-
-//FRACTAL.C
-void	ft_visual_range(t_data *mlx);
-void	ft_mandelbrot(int x, int y, t_data *mlx);
 
 //MATH_UTILS.C
 double	ft_map(double to_scale, t_range old_scale, t_range new_scale);

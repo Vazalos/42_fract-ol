@@ -38,6 +38,31 @@ void	ft_mandelbrot(int x, int y, t_data *mlx)
 	ft_put_pixel(mlx, x, y, BLACK);
 }
 
+void ft_julia(int x, int y, t_data *mlx) 
+{
+    int			i;
+    double		z_tmp;
+    int			color;
+
+    i = 0;
+	mlx->c.xr = mlx->julia.xr;
+	mlx->c.yi = mlx->julia.yi;
+    mlx->z.xr = ft_map(x, mlx->win_xrange, mlx->xr_range);
+    mlx->z.yi = ft_map(y, mlx->win_yrange, mlx->yi_range);
+    while (++i <= mlx->max_iter)
+	{
+        z_tmp = ft_squared(mlx->z.xr) - ft_squared(mlx->z.yi) + mlx->c.xr;
+        mlx->z.yi = 2 * mlx->z.xr * mlx->z.yi + mlx->c.yi;
+        mlx->z.xr = z_tmp;
+        if (ft_squared(mlx->z.xr) + ft_squared(mlx->z.yi) > mlx->escape_val) {
+            color = ft_color_profile(i, mlx);
+            ft_put_pixel(mlx, x, y, color);
+            return ;
+        }
+    }
+    ft_put_pixel(mlx, x, y, BLACK);
+}
+
 /*
 void	ft_julia(int x, int y, t_data *mlx)
 {

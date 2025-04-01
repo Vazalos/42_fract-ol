@@ -21,7 +21,7 @@ int	ft_free_all(t_data *mlx)
 		mlx_destroy_window(mlx->connect, mlx->window);
 	mlx_destroy_display(mlx->connect);
 	free(mlx->connect);
-	return (exit(0), 0);\
+	return (exit(0), 0);
 }
 
 int	main(int argc, char **argv)
@@ -29,9 +29,10 @@ int	main(int argc, char **argv)
 	t_data	mlx;
 
 	if ((argc == 2 && ft_strncmp(argv[1], "mandelbrot", 10) == 0)
-		|| (argc == 4 && ft_strncmp(argv[1], "julia", 5) == 0))
+		|| (argc == 4 && ft_strncmp(argv[1], "julia", 5) == 0)
+		|| (argc == 2 && ft_strncmp(argv[1], "fatou/nova", 10) == 0))
 	{
-		ft_init_mlx(&mlx, argv[1]);
+		ft_init_mlx(&mlx, argv);
 		ft_render_frame(&mlx);
 		ft_event_handler(&mlx);
 		mlx_loop(mlx.connect);

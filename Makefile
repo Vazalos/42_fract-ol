@@ -20,6 +20,7 @@ OBJ = $(addprefix $(OBJ_PATH)/, $(notdir $(SRC:.c=.o)))
 SRC = $(addprefix $(SRC_PATH)/, main.c \
 								color_utils.c \
 								color_profiles.c \
+								render.c \
 								draw_utils.c \
 								math_utils.c \
 								events.c \

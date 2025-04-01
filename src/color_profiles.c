@@ -24,8 +24,8 @@ int	ft_color_profile(int i, t_data *mlx)
 	if (mlx->color_profile > 3)
 		mlx->color_profile = 0;
 	mlx->j = mlx->max_iter/10.0;
-	mlx->k = mlx->max_iter/5.0;
-	mlx->l = mlx->max_iter/2.0;
+	mlx->k = mlx->max_iter/4.0;
+	mlx->l = mlx->max_iter/1.5;
 	if (mlx->color_profile == 0)
 		color = ft_legacy_color(i, mlx);
 	if (mlx->color_profile == 1)
@@ -34,6 +34,10 @@ int	ft_color_profile(int i, t_data *mlx)
 		color = ft_3rd_color(i, mlx);
 	if (mlx->color_profile == 3)
 		color = ft_4th_color(i, mlx);
+	if (mlx->color_shift > 2)
+		mlx->color_shift = 0;
+	if (mlx->color_shift != 0)
+		color = color + ((mlx->color_shift) * 50);
 	return (color);
 }
 

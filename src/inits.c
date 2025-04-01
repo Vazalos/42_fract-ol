@@ -6,29 +6,20 @@
 /*   By: david-fe <david-fe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 14:31:36 by david-fe          #+#    #+#             */
-/*   Updated: 2025/03/12 15:26:00 by david-fe         ###   ########.fr       */
+/*   Updated: 2025/03/28 13:04:52 by david-fe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fractol.h"
 
-t_range	ft_init_range(double min, double max)
-{
-	t_range range;
-
-	range.min = min;
-	range.max = max;
-	return (range);
-}
-
-int	ft_init_mlx(t_data *mlx, char *name)
+int	ft_init_mlx(t_data *mlx, char **argv)
 {
 	mlx->connect = mlx_init();
 	if (!mlx->connect)
 		return (MLX_ERROR);
-	mlx->fractal_name = name;
+	ft_parse_fractal(mlx, argv);
 	ft_init_values(mlx);
-	mlx->window = mlx_new_window(mlx->connect, WIDTH, HEIGHT, name);
+	mlx->window = mlx_new_window(mlx->connect, WIDTH, HEIGHT, mlx->fractal_name);
 	mlx->img.img_ptr = mlx_new_image(mlx->connect, WIDTH, HEIGHT);
 	if (!mlx->img.img_ptr || !mlx->window)
 		ft_free_all(mlx);
@@ -36,19 +27,40 @@ int	ft_init_mlx(t_data *mlx, char *name)
 			mlx->img.img_ptr, &mlx->img.bpp, &mlx->img.line_len, &mlx->img.endian);
 	return(0);
 }
-
-void ft_init_values(t_data *mlx)
+void	ft_parse_fractal(t_data *mlx, char **argv)
 {
-	mlx->x_offset = 0;
-	mlx->y_offset = 0;
-	mlx->win_xrange = ft_init_range(0, WIDTH);
-	mlx->win_yrange = ft_init_range(0, HEIGHT);
+	mlx->fractal_name = argv[1];
+	if(ft_strncmp(mlx->fractal_name, "mandelbrot", 10) == 0)
+		mlx->fractal_set = 1;
+	if(ft_strncmp(mlx->fractal_name, "julia", 5) == 0)		
+		mlx->fractal_set = 2;
+	if(ft_strncmp(mlx->fractal_name, "fatou/nova", 10) == 0)
+		mlx->fractal_set = 3;
+	if(mlx->fractal_set == 2)
+	{
+		mlx->julia.xr = ft_atod(argv[2]);
+		mlx->julia.yi = ft_atod(argv[3]);
+	}
+	else
+	{
+		mlx->julia.xr = -.032;
+		mlx->julia.yi = 0.7724; //492 681
+		printf("%f, %f", mlx->julia.xr, mlx->julia.yi);
+	}
+}
+
+void	ft_init_values(t_data *mlx)
+{
+	mlx->win_xrange = ft_range(0, WIDTH);
+	mlx->win_yrange = ft_range(0, HEIGHT);
 	mlx->min_xr = -2.0;
 	mlx->max_xr = 2.0;
 	mlx->min_yi = -2.0;
 	mlx->max_yi = 2.0;
-	mlx->xr_range = ft_init_range(mlx->min_xr, mlx->max_xr);
-	mlx->yi_range = ft_init_range(mlx->max_yi, mlx->min_yi);
+	mlx->xr_range = ft_range(mlx->min_xr, mlx->max_xr);
+	mlx->yi_range = ft_range(mlx->max_yi, mlx->min_yi);
+	mlx->x_offset = 0;
+	mlx->y_offset = 0;
 	mlx->scale_x = (mlx->max_xr - mlx->min_xr)/(WIDTH - 1);
 	mlx->scale_y = (mlx->max_yi - mlx->min_yi)/(HEIGHT - 1);
 	mlx->z.xr = 0;
@@ -58,8 +70,7 @@ void ft_init_values(t_data *mlx)
 	mlx->max_iter = MAX_ITER;
 	mlx->escape_val = 4;
 	mlx->color_profile = 0;
-	mlx->color_range = ft_init_range(WHITE, BLACK);
-	mlx->color_iter = ft_init_range(0, mlx->max_iter);
+	mlx->color_shift = 0;
 	mlx->zoom = ZOOM;
 	mlx->zoom_level= mlx->zoom;
 }

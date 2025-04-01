@@ -6,7 +6,7 @@
 /*   By: david-fe <david-fe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 10:28:51 by david-fe          #+#    #+#             */
-/*   Updated: 2025/03/11 10:29:29 by david-fe         ###   ########.fr       */
+/*   Updated: 2025/03/28 13:05:44 by david-fe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,56 +21,19 @@ void	ft_event_handler(t_data *mlx)
 	mlx_hook(mlx->window, DestroyNotify, 0, ft_free_all, mlx);
 }
 
-void	ft_visual_range(t_data *mlx)
+void	ft_shift_fractal(int x, int y, t_data *mlx)
 {
-	mlx->xr_range.min = mlx->min_xr + mlx->x_offset;
-	mlx->xr_range.max = mlx->max_xr + mlx->x_offset;
-	mlx->yi_range.min = mlx->min_yi + mlx->y_offset;
-	mlx->yi_range.max = mlx->max_yi + mlx->y_offset;
-	//printf("min X:%f max X:%f min Y:%f max Y:%f \n", mlx->min_xr, mlx->max_xr, mlx->min_yi, mlx->max_yi);
-	//printf("xoff %f | yoff %f\n", mlx->x_offset, mlx->y_offset);
-}
-
-void	ft_cursor_offset(int x, int y, t_data *mlx, int zoomin)
-{
-	double	cursor_xr;
-	double	cursor_yi;
-	
-	cursor_xr = mlx->min_xr + (x * (mlx->scale_x));
-	cursor_yi = mlx->max_yi - ((WIDTH - y) * (mlx->scale_y));
-	if (zoomin == 0)
+	if (mlx->fractal_set == 1)
 	{
-		mlx->min_xr = cursor_xr + (mlx->min_xr - cursor_xr) * mlx->zoom;
-		mlx->max_xr = cursor_xr + (mlx->max_xr - cursor_xr) * mlx->zoom;
-		mlx->min_yi = cursor_yi + (mlx->min_yi - cursor_yi) * mlx->zoom;
-		mlx->max_yi = cursor_yi + (mlx->max_yi - cursor_yi) * mlx->zoom;
-		mlx->zoom_level *= mlx->zoom; 
+		mlx->julia.xr = ft_map(x, mlx->win_xrange, mlx->xr_range);
+		mlx->julia.yi = ft_map(y, mlx->win_yrange, mlx->yi_range);
+		mlx->fractal_set = 2;
 	}
-	if (zoomin == 1)
+	if (mlx->fractal_set == 2)
 	{
-		mlx->min_xr = cursor_xr + (mlx->min_xr - cursor_xr) / mlx->zoom;
-		mlx->max_xr = cursor_xr + (mlx->max_xr - cursor_xr) / mlx->zoom;
-		mlx->min_yi = cursor_yi + (mlx->min_yi - cursor_yi) / mlx->zoom;
-		mlx->max_yi = cursor_yi + (mlx->max_yi - cursor_yi) / mlx->zoom;
-		mlx->zoom_level /= mlx->zoom; 
+		mlx->julia.xr = ft_map(x, mlx->win_xrange, mlx->xr_range);
+		mlx->julia.yi = ft_map(y, mlx->win_yrange, mlx->yi_range);
 	}
-		mlx->scale_x = (mlx->max_xr - mlx->min_xr)/(WIDTH - 1);
-		mlx->scale_y = (mlx->max_yi - mlx->min_yi)/(HEIGHT - 1);
-}
-
-void	ft_reset_view (t_data *mlx)
-{
-		mlx->y_offset = 0;
-		mlx->x_offset = 0;
-		mlx->zoom = ZOOM;
-		mlx->zoom_level = mlx->zoom;
-		mlx->min_xr = -2.0;
-		mlx->max_xr = 2.0;
-		mlx->min_yi = -2.0;
-		mlx->max_yi = 2.0;
-		mlx->max_iter = MAX_ITER;
-		mlx->scale_x = (mlx->max_xr - mlx->min_xr)/(WIDTH - 1);
-		mlx->scale_y = (mlx->max_yi - mlx->min_yi)/(HEIGHT - 1);
 }
 
 int ft_on_scroll(int button, int x, int y, t_data *mlx)
@@ -80,6 +43,11 @@ int ft_on_scroll(int button, int x, int y, t_data *mlx)
 		mlx->zoom *= 50;
 		ft_cursor_offset(x, y, mlx, 1);
 		mlx->zoom /= 50;
+	}
+	if(button == 2)
+	{
+		ft_printf("%i, %i\n", x, y);
+		ft_shift_fractal(x, y, mlx);
 	}
 	if(button == 3)
 	{
@@ -95,17 +63,40 @@ int ft_on_scroll(int button, int x, int y, t_data *mlx)
 	return (0);
 }
 
+void	ft_fractal_select(int keysym, t_data *mlx)
+{
+	if(keysym == XK_m)
+	{
+		mlx->max_iter = MAX_ITER;
+		mlx->fractal_set = 1;
+		ft_reset_view(mlx);
+	}
+	if(keysym == XK_j)
+	{
+		mlx->max_iter = MAX_ITER;
+		mlx->fractal_set = 2;
+		ft_reset_view(mlx);
+	}
+	if(keysym == XK_n)
+	{
+		mlx->max_iter = MAX_ITER;
+		mlx->fractal_set = 3;
+		ft_reset_view(mlx);
+	}
+}
+
 int	ft_on_keypress(int keysym, t_data *mlx)
 {   
 	if(keysym == XK_Escape)
 		ft_free_all(mlx);
 	if(keysym == XK_r)
 		ft_reset_view(mlx);
-	if(keysym == XK_c)
-	{
-		printf("color change\n");
+	if(keysym == XK_q)
+		mlx->color_shift += 0.1;
+	if(keysym == XK_j || keysym == XK_n || keysym == XK_m)
+		ft_fractal_select(keysym, mlx);
+	if(keysym == XK_c )
 		mlx->color_profile = mlx->color_profile + 1;
-	}
 	if(keysym == XK_f)
 		mlx->max_iter += 10 + (mlx->max_iter/10);
 	if(keysym == XK_g)

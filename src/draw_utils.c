@@ -6,7 +6,7 @@
 /*   By: david-fe <david-fe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 10:37:45 by david-fe          #+#    #+#             */
-/*   Updated: 2025/03/11 10:38:10 by david-fe         ###   ########.fr       */
+/*   Updated: 2025/03/28 13:05:46 by david-fe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,37 +21,44 @@ void	ft_put_pixel(t_data *mlx, int x, int y, int color)
 	*(unsigned int *)pixel_dest = color;
 }
 
-int	ft_draw_image(t_data *mlx)
+void	ft_reset_view (t_data *mlx)
 {
-	int	x;
-	int	y;
+		mlx->y_offset = 0;
+		mlx->x_offset = 0;
+		mlx->zoom = ZOOM;
+		mlx->zoom_level = mlx->zoom;
+		mlx->min_xr = -2.0;
+		mlx->max_xr = 2.0;
+		mlx->min_yi = -2.0;
+		mlx->max_yi = 2.0;
+		mlx->scale_x = (mlx->max_xr - mlx->min_xr)/(WIDTH - 1);
+		mlx->scale_y = (mlx->max_yi - mlx->min_yi)/(HEIGHT - 1);
+}
 
-	x = 0;
-	y = 0;
-
-	while (y <= HEIGHT)
+void	ft_cursor_offset(int x, int y, t_data *mlx, int zoomin)
+{
+	double	cursor_xr;
+	double	cursor_yi;
+	
+	cursor_xr = mlx->min_xr + (x * (mlx->scale_x));
+	cursor_yi = mlx->max_yi - ((WIDTH - y) * (mlx->scale_y));
+	if (zoomin == 0)
 	{
-		while (x <= WIDTH)
-		{
-			ft_mandelbrot(x, y, mlx);
-			//ft_put_pixel(mlx, x, y, WHITE);
-			x++;
-		}
-		x = 0;
-		y++;
+		mlx->min_xr = cursor_xr + (mlx->min_xr - cursor_xr) * mlx->zoom;
+		mlx->max_xr = cursor_xr + (mlx->max_xr - cursor_xr) * mlx->zoom;
+		mlx->min_yi = cursor_yi + (mlx->min_yi - cursor_yi) * mlx->zoom;
+		mlx->max_yi = cursor_yi + (mlx->max_yi - cursor_yi) * mlx->zoom;
+		mlx->zoom_level *= mlx->zoom; 
 	}
-	return (0);
+	if (zoomin == 1)
+	{
+		mlx->min_xr = cursor_xr + (mlx->min_xr - cursor_xr) / mlx->zoom;
+		mlx->max_xr = cursor_xr + (mlx->max_xr - cursor_xr) / mlx->zoom;
+		mlx->min_yi = cursor_yi + (mlx->min_yi - cursor_yi) / mlx->zoom;
+		mlx->max_yi = cursor_yi + (mlx->max_yi - cursor_yi) / mlx->zoom;
+		mlx->zoom_level /= mlx->zoom; 
+	}
+		mlx->scale_x = (mlx->max_xr - mlx->min_xr)/(WIDTH - 1);
+		mlx->scale_y = (mlx->max_yi - mlx->min_yi)/(HEIGHT - 1);
 }
 
-int	ft_render_frame(t_data *mlx)
-{
-	ft_visual_range(mlx);
-	ft_draw_image(mlx);
-	mlx_put_image_to_window(mlx->connect, mlx->window, mlx->img.img_ptr, 0, 0);
-	return (0);
-}
-
-void resume_render (t_data *mlx)
-{
-	mlx_loop_hook(mlx->connect, ft_render_frame, mlx);
-}

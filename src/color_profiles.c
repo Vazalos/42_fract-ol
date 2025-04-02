@@ -34,10 +34,10 @@ int	ft_color_profile(int i, t_data *mlx)
 		color = ft_3rd_color(i, mlx);
 	if (mlx->color_profile == 3)
 		color = ft_4th_color(i, mlx);
-	if (mlx->color_shift > 2)
-		mlx->color_shift = 0;
-	if (mlx->color_shift != 0)
-		color = color + ((mlx->color_shift) * 50);
+	color = ft_encode_argb(255,
+			ft_get_r(color) + mlx->red_shift,
+			ft_get_g(color) + mlx->green_shift,
+			ft_get_b(color) + mlx->blue_shift);
 	return (color);
 }
 

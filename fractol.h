@@ -25,6 +25,7 @@
 # define MLX_ERROR 1
 # define MAX_ITER 42
 # define ZOOM 1.4
+# define COLOR_SHIFT 20;
 
 
 //COLOR defines
@@ -88,7 +89,9 @@ typedef struct s_data
 	double		k;
 	double		l;
 	int			color_profile;
-	double		color_shift; 
+	double		red_shift;
+	double		green_shift;
+	double		blue_shift;
 	//julia
 	t_complex	julia;
 }	t_data;

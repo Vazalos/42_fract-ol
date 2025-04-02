@@ -19,7 +19,9 @@ int	ft_init_mlx(t_data *mlx, char **argv)
 		return (MLX_ERROR);
 	ft_parse_fractal(mlx, argv);
 	ft_init_values(mlx);
-	mlx->window = mlx_new_window(mlx->connect, WIDTH, HEIGHT, mlx->fractal_name);
+	mlx->window = mlx_new_window(mlx->connect, WIDTH, HEIGHT, 
+			"ARROWS/WASD move   MOUSE zoom & shift   [1]-[6][Q][E] color   "
+			"[R] reset   [F][G] depth   [M]andelbrot   [J]ulia   [N]ova");
 	mlx->img.img_ptr = mlx_new_image(mlx->connect, WIDTH, HEIGHT);
 	if (!mlx->img.img_ptr || !mlx->window)
 		ft_free_all(mlx);
@@ -44,7 +46,7 @@ void	ft_parse_fractal(t_data *mlx, char **argv)
 	else
 	{
 		mlx->julia.xr = -.032;
-		mlx->julia.yi = 0.7724; //492 681
+		mlx->julia.yi = 0.7724; //492 681 // 168 516 // 309 526 // 309 456
 		printf("%f, %f", mlx->julia.xr, mlx->julia.yi);
 	}
 }
@@ -70,7 +72,9 @@ void	ft_init_values(t_data *mlx)
 	mlx->max_iter = MAX_ITER;
 	mlx->escape_val = 4;
 	mlx->color_profile = 0;
-	mlx->color_shift = 0;
+	mlx->red_shift = 0;
+	mlx->green_shift = 0;
+	mlx->blue_shift = 0;
 	mlx->zoom = ZOOM;
 	mlx->zoom_level= mlx->zoom;
 }

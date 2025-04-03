@@ -36,7 +36,7 @@ void	ft_parse_fractal(t_data *mlx, char **argv)
 		mlx->fractal_set = 1;
 	if(ft_strncmp(mlx->fractal_name, "julia", 5) == 0)		
 		mlx->fractal_set = 2;
-	if(ft_strncmp(mlx->fractal_name, "fatou/nova", 10) == 0)
+	if(ft_strncmp(mlx->fractal_name, "nova", 4) == 0)
 		mlx->fractal_set = 3;
 	if(mlx->fractal_set == 2)
 	{
@@ -49,6 +49,15 @@ void	ft_parse_fractal(t_data *mlx, char **argv)
 		mlx->julia.yi = 0.7724; //492 681 // 168 516 // 309 526 // 309 456
 		printf("%f, %f", mlx->julia.xr, mlx->julia.yi);
 	}
+}
+
+t_range	ft_range(double min, double max)
+{
+	t_range r;
+
+	r.min = min;
+	r.max = max;
+	return (r);
 }
 
 void	ft_init_values(t_data *mlx)
@@ -77,5 +86,6 @@ void	ft_init_values(t_data *mlx)
 	mlx->blue_shift = 0;
 	mlx->zoom = ZOOM;
 	mlx->zoom_level= mlx->zoom;
+	mlx->w = 1;
 }
 

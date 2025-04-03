@@ -94,6 +94,8 @@ typedef struct s_data
 	double		blue_shift;
 	//julia
 	t_complex	julia;
+	t_complex	newton;
+	double		w;
 }	t_data;
 
 
@@ -109,6 +111,7 @@ void	ft_resume_render (t_data *mlx);
 //FRACTAL.C
 void	ft_mandelbrot(int x, int y, t_data *mlx);
 void	ft_julia(int x, int y, t_data *mlx);
+void	ft_nova(int x, int y, t_data *mlx);
 
 //DRAW_UTILS.C
 void	ft_put_pixel(t_data *mlx, int x, int y, int color);
@@ -136,13 +139,14 @@ int		ft_4th_color (int i, t_data *mlx);
 
 //MATH_UTILS.C
 double	ft_map(double to_scale, t_range old_scale, t_range new_scale);
-t_range	ft_range(double min, double max);
 double	ft_squared(double n);
+double	ft_cubed(double n);
 double  ft_atod(char *str);
 
 //INITS.C
 int		ft_init_mlx(t_data *mlx, char **argv);
 void	ft_init_values(t_data *mlx);
+t_range	ft_range(double min, double max);
 void	ft_parse_fractal(t_data *mlx, char **argv);
 
 #endif

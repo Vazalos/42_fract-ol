@@ -108,6 +108,10 @@ void	ft_fractal_select(int keysym, t_data *mlx)
 
 void	ft_color_shift(int keysym, t_data *mlx)
 {
+	if(keysym == XK_9)
+		mlx->w += 0.1;
+	if(keysym == XK_0)
+		mlx->w -= 0.1;
 	if(keysym == XK_q)
 	{
 		mlx->red_shift = 0;
@@ -135,7 +139,7 @@ int	ft_on_keypress(int keysym, t_data *mlx)
 	if(keysym == XK_r)
 		ft_reset_view(mlx);
 	if(keysym == XK_1 || keysym == XK_2 || keysym == XK_3 || keysym == XK_4
-		|| keysym == XK_5 || keysym == XK_6 || keysym == XK_q)
+		|| keysym == XK_5 || keysym == XK_6 || keysym == XK_q || keysym == XK_9 || keysym == XK_0)
 		ft_color_shift(keysym, mlx);
 	if(keysym == XK_j || keysym == XK_n || keysym == XK_m)
 		ft_fractal_select(keysym, mlx);

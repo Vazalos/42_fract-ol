@@ -57,18 +57,14 @@ double ft_atod(char *str)
 	return(sign * (whole + decimal));
 }
 
-t_range	ft_range(double min, double max)
-{
-	t_range r;
-
-	r.min = min;
-	r.max = max;
-	return (r);
-}
-
 double ft_squared(double n)
 {
 	return (n * n);
+}
+
+double ft_cubed(double n)
+{
+	return (n * n * n);
 }
 
 /*

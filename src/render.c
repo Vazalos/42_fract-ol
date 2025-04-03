@@ -31,9 +31,7 @@ void	ft_draw_image(t_data *mlx)
 			if(mlx->fractal_set == 2)
 				ft_julia(x, y, mlx);
 			if(mlx->fractal_set == 3)
-				if(x == WIDTH)
-					ft_printf(".");
-				//ft_fractal3(x, y, mlx);
+				ft_nova(x, y, mlx);
 			x++;
 		}
 		x = 0;

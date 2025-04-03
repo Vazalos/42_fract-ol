@@ -30,7 +30,7 @@ int	main(int argc, char **argv)
 
 	if ((argc == 2 && ft_strncmp(argv[1], "mandelbrot", 10) == 0)
 		|| (argc == 4 && ft_strncmp(argv[1], "julia", 5) == 0)
-		|| (argc == 2 && ft_strncmp(argv[1], "fatou/nova", 10) == 0))
+		|| (argc == 2 && ft_strncmp(argv[1], "nova", 4) == 0))
 	{
 		ft_init_mlx(&mlx, argv);
 		ft_render_frame(&mlx);

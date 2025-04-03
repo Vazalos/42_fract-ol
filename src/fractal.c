@@ -19,7 +19,7 @@ void	ft_mandelbrot(int x, int y, t_data *mlx)
 	int			color;
 
 	i = 0;
-	mlx->z.xr = 0;
+	mlx->z.xr = 0;	
 	mlx->z.yi = 0;
 	mlx->c.xr = ft_map(x, mlx->win_xrange, mlx->xr_range);
 	mlx->c.yi = ft_map(y, mlx->win_yrange, mlx->yi_range);
@@ -63,36 +63,35 @@ void ft_julia(int x, int y, t_data *mlx)
     ft_put_pixel(mlx, x, y, BLACK);
 }
 
-/*
-void	ft_julia(int x, int y, t_data *mlx)
+void ft_nova(int x, int y, t_data *mlx)
 {
+    int     i;
+    double  z_tmp;
+    int     color;
+    double  z_cubed;
+    double  z_squared;
 
-}*/
-			//color = ft_encode_argb(255, 255*i/42, 255*i/42, 255);
-			//color = ft_map(i, mlx->color_range, mlx->color_iter);
-			//printf("iter:%d omin:%f omax:%f, nmin:%f nmax:%f ", i
-//* *///,mlx->color_range.min, mlx->color_range.max, mlx->color_iter.min
-//, mlx->color_iter.max);
-			//printf("%d\n", color);
-/*
-int	ft_draw_fractal(t_data *mlx)
-{
-	int	x;
-	int	y;
-	int	color;
+    i = 0;
+    mlx->z.xr = 1;
+    mlx->z.yi = 0;
+    mlx->c.xr = ft_map(x, mlx->win_xrange, mlx->xr_range);
+    mlx->c.yi = ft_map(y, mlx->win_yrange, mlx->yi_range);
+    while (++i <= mlx->max_iter)
+    {
+        z_squared = ft_squared(mlx->z.xr) + ft_squared(mlx->z.yi); // z^2
+        z_cubed = (mlx->z.xr * z_squared) - (3 * mlx->z.xr * ft_squared(mlx->z.yi)) + 
+                  (3 * mlx->z.xr * ft_squared(mlx->z.yi)) - (mlx->z.yi * z_squared); // z^3
+        z_tmp = mlx->z.xr - ((z_cubed - 1) / (3 * z_squared)) + mlx->c.xr;
+        mlx->z.yi = mlx->z.yi - ((3 * mlx->z.xr * ft_squared(mlx->z.yi) - z_squared + 1) / (3 * z_squared)) + mlx->c.yi;
+        mlx->z.xr = z_tmp;
 
-	x = -1;
-	y = -1;
-	color = ft_encode_argb(0, 100, 0, 100);
-	while (++y <= HEIGHT)
-	{
-		while (++x <= WIDTH)
-		{
-			ft_put_pixel(mlx, x, y, color);
-			x++;
-		}
-		x = 0;
-		y++;
-	}
-	return (0);
-}*/
+        if (z_squared > 1)
+        {
+            color = ft_color_profile(i, mlx);
+            ft_put_pixel(mlx, x, y, color);
+            return ;
+        }
+    }
+    ft_put_pixel(mlx, x, y, BLACK);
+}
+

@@ -31,7 +31,14 @@ int	ft_shift_fractal2(int x, int y, t_data *mlx)
 	static int i;
 
 	i++;
-	if (i == mlx->max_iter/(5*(mlx->max_iter/10)))
+	if (mlx->fractal_set == 2 && i == mlx->max_iter/(5*(mlx->max_iter/10)))
+	{
+		i = 0;
+		mlx->julia.xr = ft_map(x, mlx->win_xrange, mlx->xr_range);
+		mlx->julia.yi = ft_map(y, mlx->win_yrange, mlx->yi_range);
+		ft_resume_render(mlx);
+	}
+	if (i == 20)
 	{
 		i = 0;
 		mlx->julia.xr = ft_map(x, mlx->win_xrange, mlx->xr_range);
@@ -79,7 +86,7 @@ int ft_on_scroll(int button, int x, int y, t_data *mlx)
 	if(button == 4)
 		ft_cursor_offset(x, y, mlx, 1);
 	if(button == 5)
-		ft_cursor_offset(x, y, mlx, 0);
+	ft_cursor_offset(x, y, mlx, 0);
 	ft_render_frame(mlx);
 	return (0);
 }
@@ -108,10 +115,6 @@ void	ft_fractal_select(int keysym, t_data *mlx)
 
 void	ft_color_shift(int keysym, t_data *mlx)
 {
-	if(keysym == XK_9)
-		mlx->w += 0.1;
-	if(keysym == XK_0)
-		mlx->w -= 0.1;
 	if(keysym == XK_q)
 	{
 		mlx->red_shift = 0;
@@ -138,6 +141,14 @@ int	ft_on_keypress(int keysym, t_data *mlx)
 		ft_free_all(mlx);
 	if(keysym == XK_r)
 		ft_reset_view(mlx);
+	if(keysym == XK_t)
+	{
+		if (mlx->toggle == 1)
+			mlx->toggle = 0;
+		else
+			mlx->toggle = 1;
+		ft_resume_render(mlx);
+	}
 	if(keysym == XK_1 || keysym == XK_2 || keysym == XK_3 || keysym == XK_4
 		|| keysym == XK_5 || keysym == XK_6 || keysym == XK_q || keysym == XK_9 || keysym == XK_0)
 		ft_color_shift(keysym, mlx);

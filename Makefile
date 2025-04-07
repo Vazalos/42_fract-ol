@@ -25,7 +25,8 @@ SRC = $(addprefix $(SRC_PATH)/, main.c \
 								math_utils.c \
 								events.c \
 								fractal.c \
-								inits.c)
+								inits.c \
+								nova.c)
 SRC_PATH = src
 
 ARC = fractol.a

@@ -94,8 +94,9 @@ typedef struct s_data
 	double		blue_shift;
 	//julia
 	t_complex	julia;
-	t_complex	newton;
-	double		w;
+	t_complex	nova;
+	double		nova_esc_val;
+	int			toggle;
 }	t_data;
 
 
@@ -112,6 +113,7 @@ void	ft_resume_render (t_data *mlx);
 void	ft_mandelbrot(int x, int y, t_data *mlx);
 void	ft_julia(int x, int y, t_data *mlx);
 void	ft_nova(int x, int y, t_data *mlx);
+void	ft_sin(int x, int y, t_data *mlx);
 
 //DRAW_UTILS.C
 void	ft_put_pixel(t_data *mlx, int x, int y, int color);
@@ -148,5 +150,15 @@ int		ft_init_mlx(t_data *mlx, char **argv);
 void	ft_init_values(t_data *mlx);
 t_range	ft_range(double min, double max);
 void	ft_parse_fractal(t_data *mlx, char **argv);
+
+//NOVA
+
+double	ft_abs (double n);
+void	calculate_nova(t_data *mlx);
+unsigned int	ft_compare_roots(t_data *mlx);
+void	ft_init_roots(t_complex *roots);
+t_complex	ft_diff_to_root(t_complex nova, t_complex root);
+//void	ft_nova(t_data *mlx, int x, int y);
+
 
 #endif

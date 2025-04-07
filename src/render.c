@@ -31,7 +31,7 @@ void	ft_draw_image(t_data *mlx)
 			if(mlx->fractal_set == 2)
 				ft_julia(x, y, mlx);
 			if(mlx->fractal_set == 3)
-				ft_nova(x, y, mlx);
+				ft_sin(x, y, mlx);
 			x++;
 		}
 		x = 0;

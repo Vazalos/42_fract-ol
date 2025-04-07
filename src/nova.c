@@ -1,86 +1,117 @@
-#include <stdio.h>
-#include <math.h>
-#include <stdbool.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   nova.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: david-fe <david-fe@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/03 16:51:59 by david-fe          #+#    #+#             */
+/*   Updated: 2025/04/03 16:52:02 by david-fe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../fractol.h"
+#include <math.h>
 
-typedef struct {
-    double x;
-    double y;
-} vec2;
+void	calculate_nova(t_data *mlx);
+unsigned int	ft_compare_roots(t_data *mlx);
+void	ft_init_roots(t_complex *roots);
+t_complex	ft_diff_to_root(t_complex z_newton, t_complex root);
 
-typedef struct {
-    double x;
-    double y;
-    double z;
-} vec3;
-
-vec3 magma(double t) {
-    const vec3 c0 = {-0.002136485053939582, -0.000749655052795221, -0.005386127855323933};
-    const vec3 c1 = {0.2516605407371642, 0.6775232436837668, 2.494026599312351};
-    const vec3 c2 = {8.353717279216625, -3.577719514958484, 0.3144679030132573};
-    const vec3 c3 = {-27.66873308576866, 14.26473078096533, -13.64921318813922};
-    const vec3 c4 = {52.17613981234068, -27.94360607168351, 12.94416944238394};
-    const vec3 c5 = {-50.76852536473588, 29.04658282127291, 4.23415299384598};
-    const vec3 c6 = {18.65570506591883, -11.48977351997711, -5.601961508734096};
-
-    t *= 2.0;
-    if (t >= 1.0) {
-        t = 2.0 - t;
-    }
-
-    vec3 result = {
-        c0.x + t * (c1.x + t * (c2.x + t * (c3.x + t * (c4.x + t * (c5.x + t * c6.x))))),
-        c0.y + t * (c1.y + t * (c2.y + t * (c3.y + t * (c4.y + t * (c5.y + t * c6.y))))),
-        c0.z + t * (c1.z + t * (c2.z + t * (c3.z + t * (c4.z + t * (c5.z + t * c6.z)))))
-    };
-
-    return result;
+double	ft_abs (double n)
+{
+	if (n < 0)
+		return (-n);
+	return (n);
 }
 
-vec2 cmul(vec2 a, vec2 b) {
-    return (vec2){ a.x * b.x - a.y * b.y, a.x * b.y + a.y * b.x };
+void	calculate_nova(t_data *mlx)
+{
+	t_complex	next;
+	double		denominator;
+
+	denominator	= (3 * (ft_squared(mlx->nova.xr) + ft_squared(mlx->nova.yi)));
+	next.xr = (ft_squared(mlx->nova.xr) * ft_cubed(mlx->nova.xr)) + 
+			(2 * ft_cubed(mlx->nova.xr) * ft_squared(mlx->nova.yi)) 
+			- ft_squared(mlx->nova.xr) + (mlx->nova.xr * ft_squared(mlx->nova.yi)
+			* ft_squared(mlx->nova.yi)) + (ft_squared(mlx->nova.yi)
+			/denominator);
+	next.yi = ((mlx->nova.yi * ((ft_squared(mlx->nova.xr) 
+			* ft_squared(mlx->nova.xr)) + (2 * ft_squared(mlx->nova.xr)
+			* ft_squared(mlx->nova.yi)) + (2 * mlx->nova.xr) 
+			+ (ft_squared(mlx->nova.yi) * ft_squared(mlx->nova.yi))) 
+			/ denominator));
+	mlx->nova.xr = next.xr;
+	mlx->nova.yi = next.yi;
 }
 
-vec2 cdiv(vec2 a, vec2 b) {
-    double d = b.x * b.x + b.y * b.y;
-    return (vec2){ (a.x * b.x + a.y * b.y) / d, (a.y * b.x - a.x * b.y) / d };
+unsigned int	ft_compare_roots(t_data *mlx)
+{
+	static t_complex	roots[3];
+	t_complex			diff;
+
+	ft_init_roots(roots);
+	diff = ft_diff_to_root(mlx->nova, roots[0]);
+	if ((ft_abs(diff.xr) < mlx->nova_esc_val) && (ft_abs(diff.yi) < mlx->nova_esc_val))
+		return (1);
+	diff = ft_diff_to_root(mlx->nova, roots[1]);
+	if ((ft_abs(diff.xr) < mlx->nova_esc_val) && (ft_abs(diff.yi) < mlx->nova_esc_val))
+		return (2);
+	diff = ft_diff_to_root(mlx->nova, roots[2]);
+	if ((ft_abs(diff.xr) < mlx->nova_esc_val) && (ft_abs(diff.yi) < mlx->nova_esc_val))
+		return (3);
+	else
+		return (0);
 }
 
-vec2 cpowa(vec2 z, double n) {
-    double r = sqrt(z.x * z.x + z.y * z.y);
-    double a = atan2(z.y, z.x);
-    return (vec2){ pow(r, n) * cos(a * n), pow(r, n) * sin(a * n) };
+void	ft_init_roots(t_complex *roots)
+{
+	static unsigned int	set;
+
+	if (!set)
+	{
+		roots[0] = (t_complex){1, 0};
+		roots[1] = (t_complex){0.5, 0.866025};
+		roots[2] = (t_complex){0.5, -0.866025};
+		set = 1;
+	}
 }
 
-double map(vec2 z, vec2 c, double n, bool mouseDown, vec2 mouse, vec2 resolution) {
-    double i = 0.0;
-    double p = 3.0; // Degree
-    vec2 z_prev = {0, 0};
-    if (mouseDown) {
-        c = (vec2){ 0.75 * (2.0 * mouse.x - resolution.x) / resolution.y - 0.5, 0.75 * (2.0 * mouse.y - resolution.y) / resolution.y };
-    } else {
-        z = (vec2){ 1.0, 0.0 };
-    }
-    for (i = 0.0; i < n; i++) {
-        z_prev = z;
-        z = (vec2){ z.x - ((cpowa(z, p).x - 1) / (3 * cpowa(z, p - 1).x)) + c.x, z.y - ((cpowa(z, p).y - 1) / (3 * cpowa(z, p - 1).y)) + c.y };
-        if (fabs((z.x - z_prev.x) * (z.x - z_prev.x) + (z.y - z_prev.y) * (z.y - z_prev.y)) < 0.0001) {
-            break;
-        }
-    }
-    return i / n;
+t_complex	ft_diff_to_root(t_complex nova, t_complex root)
+{
+	t_complex	diff;
+
+	diff.xr = (nova.xr - root.xr);
+	diff.yi = (nova.yi - root.yi);
+	//printf("nxy %f %f rxy %f %f\n", nova.xr, nova.yi, root.xr, root.yi);
+	return (diff);
 }
 
-int nova() {
-    vec2 resolution = {WIDTH, HEIGHT};
-    vec2 mouse = {400, 300};
-    bool mouseDown = false;
+void	ft_nova(int x, int y, t_data *mlx)
+{
+	int			i;
+	int			root;
+	int			color;
 
-    vec2 uv = (vec2){ 0.75 * (2.0 * mouse.x - resolution.x) / resolution.y - 0.5, 0.75 * (2.0 * mouse.y - resolution.y) / resolution.y };
-    double t = map(uv, uv, 64.0, mouseDown, mouse, resolution);
-    vec3 color = magma(t);
+	i = 0;
+	mlx->nova.xr = (ft_map(x, mlx->win_xrange, mlx->xr_range) * mlx->zoom) + mlx->x_offset;
+	mlx->nova.yi = (ft_map(y, mlx->win_yrange, mlx->yi_range) * mlx->zoom) + mlx->y_offset;
+	while (i++ < mlx->max_iter)
+	{
+		calculate_nova(mlx);
+		root = ft_compare_roots(mlx);
+		if (root != 0)
+		{
 
-    printf("Color: R=%f, G=%f, B=%f\n", color.x, color.y, color.z);
-
-    return 0;
+			color = ft_color_profile(i, mlx); // probably no enough
+			if (root == 1)
+				ft_put_pixel(mlx, x, y, RED);
+			if (root == 2)
+				ft_put_pixel(mlx, x, y, GREEN);
+			if (root == 3)
+				ft_put_pixel(mlx, x, y, BLUE);
+			return ;
+		}
+	}
+	ft_put_pixel(mlx, x, y, BLACK);
 }

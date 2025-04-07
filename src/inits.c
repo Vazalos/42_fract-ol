@@ -86,6 +86,7 @@ void	ft_init_values(t_data *mlx)
 	mlx->blue_shift = 0;
 	mlx->zoom = ZOOM;
 	mlx->zoom_level= mlx->zoom;
-	mlx->w = 1;
+	mlx->nova_esc_val = 0.000001;
+	mlx->toggle = 0;
 }
 

@@ -23,7 +23,7 @@ void	ft_draw_image(t_data *mlx)
 	{
 		while (x <= WIDTH)
 		{
-			if (mlx->fractal_set > 3)
+			if (mlx->fractal_set > 4)
 				mlx->fractal_set = 1;
 			if (mlx->fractal_set == 1)
 				ft_mandelbrot(x, y, mlx);
@@ -31,6 +31,8 @@ void	ft_draw_image(t_data *mlx)
 				ft_julia(x, y, mlx);
 			if (mlx->fractal_set == 3)
 				ft_sin(x, y, mlx);
+			if (mlx->fractal_set == 4)
+				ft_sin_julia(x, y, mlx);
 			x++;
 		}
 		x = 0;

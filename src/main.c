@@ -19,6 +19,12 @@
 //norm ALL
 //Makefile git clone for mlx
 
+void	ft_error(void)
+{
+	ft_printf("valid args are 'mandelbrot', 'julia' and 'sin'\n");
+	ft_printf("julia requires 2 numbers, recommended range {-2, 2}\n");
+}
+
 int	ft_free_all(t_data *mlx)
 {
 	if (mlx->img.img_ptr != NULL)
@@ -36,7 +42,7 @@ int	main(int argc, char **argv)
 
 	if ((argc == 2 && ft_strncmp(argv[1], "mandelbrot", 10) == 0)
 		|| (argc == 4 && ft_strncmp(argv[1], "julia", 5) == 0)
-		|| (argc == 2 && ft_strncmp(argv[1], "nova", 4) == 0))
+		|| (argc == 2 && ft_strncmp(argv[1], "sin", 3) == 0))
 	{
 		ft_init_mlx(&mlx, argv);
 		ft_render_frame(&mlx);
@@ -44,5 +50,5 @@ int	main(int argc, char **argv)
 		mlx_loop(mlx.connect);
 	}
 	else
-		ft_printf("error");
+		ft_error();
 }

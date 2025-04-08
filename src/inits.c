@@ -20,8 +20,8 @@ int	ft_init_mlx(t_data *mlx, char **argv)
 	ft_parse_fractal(mlx, argv);
 	ft_init_values(mlx);
 	mlx->window = mlx_new_window(mlx->connect, WIDTH, HEIGHT,
-			"ARROWS/WASD move   MOUSE zoom & shift   [1]-[6][Q][E] color   "
-			"[R] reset   [F][G] depth   [M]andelbrot   [J]ulia   [N]ova");
+			"ARROWS/WASD move   MOUSE/[T] zoom & shift   [1]-[6][Q][E] color   "
+			"[R] reset   [F][G] depth   [M]andelbrot   [J]ulia   Si[N]");
 	mlx->img.img_ptr = mlx_new_image(mlx->connect, WIDTH, HEIGHT);
 	if (!mlx->img.img_ptr || !mlx->window)
 		ft_free_all(mlx);
@@ -37,18 +37,22 @@ void	ft_parse_fractal(t_data *mlx, char **argv)
 		mlx->fractal_set = 1;
 	if (ft_strncmp(mlx->fractal_name, "julia", 5) == 0)
 		mlx->fractal_set = 2;
-	if (ft_strncmp(mlx->fractal_name, "nova", 4) == 0)
+	if (ft_strncmp(mlx->fractal_name, "sin", 4) == 0)
 		mlx->fractal_set = 3;
 	if (mlx->fractal_set == 2)
 	{
 		mlx->julia.xr = ft_atod(argv[2]);
 		mlx->julia.yi = ft_atod(argv[3]);
+		mlx->toggle_julia = 0;
 	}
 	else
 	{
 		mlx->julia.xr = -.032;
 		mlx->julia.yi = 0.7724;
+		mlx->toggle_julia = 1;
 	}
+	mlx->sin_julia.xr = 0;
+	mlx->sin_julia.yi = 0;
 }
 //good julias //492 681 // 168 516 // 309 526 // 309 456
 
@@ -87,5 +91,4 @@ void	ft_init_values(t_data *mlx)
 	mlx->red_shift = 0;
 	mlx->green_shift = 0;
 	mlx->blue_shift = 0;
-	mlx->toggle = 0;
 }

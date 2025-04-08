@@ -22,13 +22,13 @@
 
 # define WIDTH	1000
 # define HEIGHT	1000
+
 # define MLX_ERROR 1
 # define MAX_ITER 42
+# define SIN_LIMIT 100
 # define ZOOM 1.4
-# define COLOR_SHIFT 20;
+# define COLOR_SHIFT 20
 
-
-//COLOR defines
 # define BLACK	0xFF000000
 # define WHITE	0xFFFFFFFF
 # define RED	0xFFFF0000
@@ -94,12 +94,10 @@ typedef struct s_data
 	double		blue_shift;
 	//julia
 	t_complex	julia;
-	t_complex	nova;
-	double		nova_esc_val;
-	int			toggle;
+	t_complex	sin_julia;
+	//function movement
+	int			toggle_julia;
 }	t_data;
-
-
 
 //MAIN.C
 int		ft_free_all(t_data *mlx);
@@ -107,25 +105,30 @@ int		ft_free_all(t_data *mlx);
 //RENDER.C
 void	ft_draw_image(t_data *mlx);
 int		ft_render_frame(t_data *mlx);
-void	ft_resume_render (t_data *mlx);
+void	ft_resume_render(t_data *mlx);
 
 //FRACTAL.C
 void	ft_mandelbrot(int x, int y, t_data *mlx);
 void	ft_julia(int x, int y, t_data *mlx);
-void	ft_nova(int x, int y, t_data *mlx);
 void	ft_sin(int x, int y, t_data *mlx);
+void	ft_sin_julia(int x, int y, t_data *mlx);
 
 //DRAW_UTILS.C
 void	ft_put_pixel(t_data *mlx, int x, int y, int color);
-void	ft_reset_view (t_data *mlx);
+void	ft_reset_view(t_data *mlx);
 void	ft_cursor_offset(int x, int y, t_data *mlx, int zoomin);
 
 //EVENTS.C
 void	ft_event_handler(t_data *mlx);
 int		ft_on_scroll(int keysym, int x, int y, t_data *mlx);
 int		ft_on_keypress(int keysym, t_data *mlx);
-int		ft_shift_fractal(int x, int y, t_data *mlx);
 int		ft_move_fractal(int x, int y, t_data *mlx);
+
+//EVENT_HELPERS.C
+void	ft_color_shift(int keysym, t_data *mlx);
+void	ft_toggle_julia(t_data *mlx);
+int		ft_shift_fractal(int x, int y, t_data *mlx);
+void	ft_select_fractal(int keysym, t_data *mlx);
 
 //COLOR_UTILS.C
 int		ft_encode_argb(int a, int r, int g, int b);
@@ -135,32 +138,22 @@ int		ft_get_g(int argb);
 int		ft_get_b(int argb);
 
 //COLOR_PROFILES.C
-int		ft_color_profile (int i, t_data *mlx);
-int		ft_legacy_color (int i, t_data *mlx);
-int		ft_2nd_color (int i, t_data *mlx);
-int		ft_3rd_color (int i, t_data *mlx);
-int		ft_4th_color (int i, t_data *mlx);
+int		ft_color_profile(int i, t_data *mlx);
+int		ft_legacy_color(int i, t_data *mlx);
+int		ft_2nd_color(int i, t_data *mlx);
+int		ft_3rd_color(int i, t_data *mlx);
+int		ft_4th_color(int i, t_data *mlx);
 
 //MATH_UTILS.C
 double	ft_map(double to_scale, t_range old_scale, t_range new_scale);
 double	ft_squared(double n);
 double	ft_cubed(double n);
-double  ft_atod(char *str);
+double	ft_atod(char *str);
 
 //INITS.C
 int		ft_init_mlx(t_data *mlx, char **argv);
 void	ft_init_values(t_data *mlx);
 t_range	ft_range(double min, double max);
 void	ft_parse_fractal(t_data *mlx, char **argv);
-
-//NOVA
-
-double	ft_abs (double n);
-void	calculate_nova(t_data *mlx);
-unsigned int	ft_compare_roots(t_data *mlx);
-void	ft_init_roots(t_complex *roots);
-t_complex	ft_diff_to_root(t_complex nova, t_complex root);
-//void	ft_nova(t_data *mlx, int x, int y);
-
 
 #endif

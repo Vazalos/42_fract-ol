@@ -124,6 +124,8 @@ void	ft_cursor_offset(int x, int y, t_data *mlx, int zoomin);
 void	ft_event_handler(t_data *mlx);
 int		ft_on_scroll(int keysym, int x, int y, t_data *mlx);
 int		ft_on_keypress(int keysym, t_data *mlx);
+int		ft_shift_fractal(int x, int y, t_data *mlx);
+int		ft_move_fractal(int x, int y, t_data *mlx);
 
 //COLOR_UTILS.C
 int		ft_encode_argb(int a, int r, int g, int b);

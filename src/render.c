@@ -19,18 +19,17 @@ void	ft_draw_image(t_data *mlx)
 
 	x = 0;
 	y = 0;
-
 	while (y <= HEIGHT)
 	{
 		while (x <= WIDTH)
 		{
-			if(mlx->fractal_set > 3)
+			if (mlx->fractal_set > 3)
 				mlx->fractal_set = 1;
-			if(mlx->fractal_set == 1)
+			if (mlx->fractal_set == 1)
 				ft_mandelbrot(x, y, mlx);
-			if(mlx->fractal_set == 2)
+			if (mlx->fractal_set == 2)
 				ft_julia(x, y, mlx);
-			if(mlx->fractal_set == 3)
+			if (mlx->fractal_set == 3)
 				ft_sin(x, y, mlx);
 			x++;
 		}
@@ -55,8 +54,7 @@ int	ft_render_frame(t_data *mlx)
 	return (0);
 }
 
-void ft_resume_render (t_data *mlx)
+void	ft_resume_render(t_data *mlx)
 {
 	mlx_loop_hook(mlx->connect, ft_render_frame, mlx);
 }
-

@@ -11,11 +11,8 @@
 /* ************************************************************************** */
 
 #include "../fractol.h"
-
-int	ft_legacy_color(int i, t_data *mlx);
-int	ft_2nd_color(int i, t_data *mlx);
-int	ft_3rd_color(int i, t_data *mlx);
-int	ft_4th_color(int i, t_data *mlx);
+#define A 200
+#define B 128
 
 int	ft_color_profile(int i, t_data *mlx)
 {
@@ -23,9 +20,9 @@ int	ft_color_profile(int i, t_data *mlx)
 
 	if (mlx->color_profile > 3)
 		mlx->color_profile = 0;
-	mlx->j = mlx->max_iter/10.0;
-	mlx->k = mlx->max_iter/4.0;
-	mlx->l = mlx->max_iter/1.5;
+	mlx->j = mlx->max_iter / 10.0;
+	mlx->k = mlx->max_iter / 4.0;
+	mlx->l = mlx->max_iter / 1.5;
 	if (mlx->color_profile == 0)
 		color = ft_legacy_color(i, mlx);
 	if (mlx->color_profile == 1)
@@ -54,8 +51,8 @@ int	ft_legacy_color(int i, t_data *mlx)
 
 int	ft_2nd_color(int i, t_data *mlx)
 {
-	int	color;
-	double d;
+	int		color;
+	double	d;
 
 	d = mlx->max_iter;
 	if (i >= d - mlx->j)
@@ -72,7 +69,7 @@ int	ft_2nd_color(int i, t_data *mlx)
 		color = ft_encode_argb(255,
 				ft_map(i, ft_range(d - mlx->l, d - mlx->k), ft_range(0, 0)),
 				ft_map(i, ft_range(d - mlx->l, d - mlx->k), ft_range(0, 220)),
-				ft_map(i, ft_range(d - mlx->l, d - mlx->k), ft_range(200, 220)));
+				ft_map(i, ft_range(d - mlx->l, d - mlx->k), ft_range(A, 220)));
 	if (i < d - mlx->l)
 		color = ft_encode_argb(255,
 				ft_map(i, ft_range(0, d - mlx->l), ft_range(20, 0)),
@@ -83,8 +80,8 @@ int	ft_2nd_color(int i, t_data *mlx)
 
 int	ft_3rd_color(int i, t_data *mlx)
 {
-	int	color;
-	double d;
+	int		color;
+	double	d;
 
 	d = mlx->max_iter;
 	if (i >= d - mlx->j)
@@ -101,7 +98,7 @@ int	ft_3rd_color(int i, t_data *mlx)
 		color = ft_encode_argb(255,
 				ft_map(i, ft_range(d - mlx->l, d - mlx->k), ft_range(128, 255)),
 				ft_map(i, ft_range(d - mlx->l, d - mlx->k), ft_range(0, 20)),
-				ft_map(i, ft_range(d - mlx->l, d - mlx->k), ft_range(128, 147)));
+				ft_map(i, ft_range(d - mlx->l, d - mlx->k), ft_range(B, 147)));
 	if (i < d - mlx->l)
 		color = ft_encode_argb(255,
 				ft_map(i, ft_range(0, d - mlx->l), ft_range(0, 128)),
@@ -112,8 +109,8 @@ int	ft_3rd_color(int i, t_data *mlx)
 
 int	ft_4th_color(int i, t_data *mlx)
 {
-	int	color;
-	double d;
+	int		color;
+	double	d;
 
 	d = mlx->max_iter;
 	if (i >= d - mlx->j)
@@ -138,30 +135,3 @@ int	ft_4th_color(int i, t_data *mlx)
 				ft_map(i, ft_range(0, d - mlx->l), ft_range(10, 50)));
 	return (color);
 }
-
-/*
-	int	color;
-	int max;
-	int n;
-	double m;
-
-	max = mlx->max_iter;
-	n = 10;
-	m = 1;
-	if (i >= MAX_ITER)
-		color = ft_encode_argb(255,
-				ft_map(i, ft_range(MAX_ITER, max), ft_range(200, 255)),
-				ft_map(i, ft_range(MAX_ITER, max), ft_range(200, 0)),
-				ft_map(i, ft_range(MAX_ITER, max), ft_range(50, 0)));
-	if (i < MAX_ITER && i >= MAX_ITER - (n * m))
-		color = ft_encode_argb(255,
-				ft_map(i, ft_range(MAX_ITER - (n * m), MAX_ITER), ft_range(60, 200)),
-				ft_map(i, ft_range(MAX_ITER - (n * m), MAX_ITER), ft_range(200, 200)),
-				ft_map(i, ft_range(MAX_ITER - (n * m), MAX_ITER), ft_range(90, 50)));
-	if (i < MAX_ITER - (n * m))
-		color = ft_encode_argb(255,
-				ft_map(i, ft_range(0, MAX_ITER - (n * m)), ft_range(0, 60)),
-				ft_map(i, ft_range(0, MAX_ITER - (n * m)), ft_range(0, 200)),
-				ft_map(i, ft_range(0, MAX_ITER - (n * m)), ft_range(0, 90)));
-	return (color);
-*/

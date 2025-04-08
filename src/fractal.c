@@ -115,37 +115,3 @@ void	ft_sin(int x, int y, t_data *mlx)
 	}
 	ft_put_pixel(mlx, x, y, BLACK);
 }
-
-/*
-void ft_nova(int x, int y, t_data *mlx)
-{
-    int     i;
-    double  z_tmp;
-    int     color;
-    double  z_cubed;
-    double  z_squared;
-
-    i = 0;
-    mlx->z.xr = 1;
-    mlx->z.yi = 0;
-    mlx->c.xr = ft_map(x, mlx->win_xrange, mlx->xr_range);
-    mlx->c.yi = ft_map(y, mlx->win_yrange, mlx->yi_range);
-    while (++i <= mlx->max_iter)
-    {
-        z_squared = ft_squared(mlx->z.xr) + ft_squared(mlx->z.yi); // z^2
-        z_cubed = (mlx->z.xr * z_squared) - (3 * mlx->z.xr * ft_squared(mlx->z.yi)) + 
-                  (3 * mlx->z.xr * ft_squared(mlx->z.yi)) - (mlx->z.yi * z_squared); // z^3
-        z_tmp = mlx->z.xr - ((z_cubed - 1) / (3 * z_squared)) + mlx->c.xr;
-        mlx->z.yi = mlx->z.yi - ((3 * mlx->z.xr * ft_squared(mlx->z.yi) - z_squared + 1) / (3 * z_squared)) + mlx->c.yi;
-        mlx->z.xr = z_tmp;
-
-        if (z_squared > 1)
-        {
-            color = ft_color_profile(i, mlx);
-            ft_put_pixel(mlx, x, y, color);
-            return ;
-        }
-    }
-    ft_put_pixel(mlx, x, y, BLACK);
-}*/
-

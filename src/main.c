@@ -13,11 +13,17 @@
 #include "../fractol.h"
 #include "../libft/libft.h"
 
+//TO DO
+//better symbol parsing for julia
+//error message/intruction print
+//norm ALL
+//Makefile git clone for mlx
+
 int	ft_free_all(t_data *mlx)
 {
-	if(mlx->img.img_ptr != NULL)
+	if (mlx->img.img_ptr != NULL)
 		mlx_destroy_image(mlx->connect, mlx->img.img_ptr);
-	if(mlx->window != NULL)
+	if (mlx->window != NULL)
 		mlx_destroy_window(mlx->connect, mlx->window);
 	mlx_destroy_display(mlx->connect);
 	free(mlx->connect);

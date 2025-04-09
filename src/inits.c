@@ -12,13 +12,14 @@
 
 #include "../fractol.h"
 
-int	ft_init_mlx(t_data *mlx, char **argv)
+int	ft_init_mlx(t_data *mlx)
 {
+	mlx->connect = NULL;
+	mlx->img.img_ptr = NULL;
+	mlx->window = NULL;
 	mlx->connect = mlx_init();
 	if (!mlx->connect)
 		return (MLX_ERROR);
-	ft_parse_fractal(mlx, argv);
-	ft_init_values(mlx);
 	mlx->window = mlx_new_window(mlx->connect, WIDTH, HEIGHT,
 			"ARROWS/WASD move   MOUSE/[T] zoom & shift   [1]-[6][Q][E] color   "
 			"[R] reset   [F][G] depth   [M]andelbrot   [J]ulia   Si[N]");
@@ -28,6 +29,35 @@ int	ft_init_mlx(t_data *mlx, char **argv)
 	mlx->img.pix_addr = mlx_get_data_addr(mlx->img.img_ptr, &mlx->img.bpp,
 			&mlx->img.line_len, &mlx->img.endian);
 	return (0);
+}
+
+void	ft_valid_julia_args(char **argv)
+{
+	static int	i;
+
+	while (argv[2] && argv[2][i])
+	{
+		if (ft_strchr(".+-1234567890", argv[2][i]) != NULL)
+			i++;
+		else
+		{
+			ft_printf("invalid arguments for julia!\n");
+			ft_error();
+			exit (0);
+		}
+	}
+	i = 0;
+	while (argv[3] && argv[3][i])
+	{
+		if (ft_strchr(".+-1234567890", argv[3][i]) != NULL)
+			i++;
+		else
+		{
+			ft_printf("invalid arguments for julia!\n");
+			ft_error();
+			exit (0);
+		}
+	}
 }
 
 void	ft_parse_fractal(t_data *mlx, char **argv)
@@ -41,6 +71,7 @@ void	ft_parse_fractal(t_data *mlx, char **argv)
 		mlx->fractal_set = 3;
 	if (mlx->fractal_set == 2)
 	{
+		ft_valid_julia_args(argv);
 		mlx->julia.xr = ft_atod(argv[2]);
 		mlx->julia.yi = ft_atod(argv[3]);
 		mlx->toggle_julia = 0;

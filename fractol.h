@@ -101,6 +101,8 @@ typedef struct s_data
 
 //MAIN.C
 int		ft_free_all(t_data *mlx);
+void	ft_error(void);
+void	ft_control_help(void);
 
 //RENDER.C
 void	ft_draw_image(t_data *mlx);
@@ -151,7 +153,7 @@ double	ft_cubed(double n);
 double	ft_atod(char *str);
 
 //INITS.C
-int		ft_init_mlx(t_data *mlx, char **argv);
+int		ft_init_mlx(t_data *mlx);
 void	ft_init_values(t_data *mlx);
 t_range	ft_range(double min, double max);
 void	ft_parse_fractal(t_data *mlx, char **argv);

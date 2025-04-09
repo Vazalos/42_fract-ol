@@ -55,14 +55,16 @@ MLX_PATH = mlx-linux
 all: $(OBJ_PATH) $(NAME)
 
 $(NAME): $(MLX) $(OBJ) $(LIBFT) 
-	ar rcs $(ARCH) $(OBJ)
+	@ar rcs $(ARCH) $(OBJ)
+	@echo created archive
 	$(CC) $(CC_FLAGS) $(MLX_FLAGS) $(OBJ) $(LIBFT) $(MLX) -o $(NAME)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_PATH)
 
 $(MLX):
-	git clone git@github.com:42paris/minilibx-linux.git $(MLX_PATH)
+	@ git clone git@github.com:42paris/minilibx-linux.git $(MLX_PATH)
+	@ echo minilibx cloned
 	$(MAKE) -C $(MLX_PATH)
 
 $(OBJ_PATH):

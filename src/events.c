@@ -17,7 +17,7 @@ void	ft_event_handler(t_data *mlx)
 	mlx_mouse_hook(mlx->window, ft_on_scroll, mlx);
 	mlx_hook(mlx->window, KeyPress, KeyPressMask, ft_on_keypress, mlx);
 	mlx_hook(mlx->window, DestroyNotify, 0, ft_free_all, mlx);
-	mlx_hook(mlx->window, 6, 1L<<6, ft_move_fractal, mlx);
+	mlx_hook(mlx->window, 6, 1L << 6, ft_move_fractal, mlx);
 }
 
 int	ft_move_fractal(int x, int y, t_data *mlx)
@@ -34,7 +34,6 @@ int	ft_move_fractal(int x, int y, t_data *mlx)
 			i = 0;
 			mlx->julia.xr = ft_map(x, mlx->win_xrange, mlx->xr_range);
 			mlx->julia.yi = ft_map(y, mlx->win_yrange, mlx->yi_range);
-			printf("%f %f\n", mlx->julia.xr, mlx->julia.yi);
 			ft_resume_render(mlx);
 		}
 		if (mlx->fractal_set == 4 && i == 20)
@@ -58,10 +57,7 @@ int	ft_on_scroll(int button, int x, int y, t_data *mlx)
 		mlx->zoom /= 50;
 	}
 	if (button == 2)
-	{
-		ft_printf("%i, %i\n", x, y);
 		ft_shift_fractal(x, y, mlx);
-	}
 	if (button == 3)
 	{
 		mlx->zoom *= 25;

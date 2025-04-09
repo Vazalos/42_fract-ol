@@ -81,33 +81,24 @@ void	ft_select_fractal(int keysym, t_data *mlx)
 	{
 		mlx->max_iter = MAX_ITER;
 		mlx->fractal_set = 1;
-		mlx->toggle_julia = 0;
 		ft_reset_view(mlx);
-		ft_resume_render(mlx);
 	}
 	if (keysym == XK_j)
 	{
 		mlx->max_iter = MAX_ITER;
 		mlx->fractal_set = 2;
-		mlx->toggle_julia = 0;
 		ft_reset_view(mlx);
-		ft_resume_render(mlx);
 	}
 	if (keysym == XK_n)
 	{
 		mlx->max_iter = MAX_ITER;
 		mlx->fractal_set = 3;
-		mlx->toggle_julia = 0;
 		ft_reset_view(mlx);
-		ft_resume_render(mlx);
 	}
 	if (keysym == XK_h)
 	{
 		mlx->max_iter = MAX_ITER;
 		mlx->fractal_set = 4;
-		mlx->toggle_julia = 0;
 		ft_reset_view(mlx);
-		ft_resume_render(mlx);
 	}
 }
-

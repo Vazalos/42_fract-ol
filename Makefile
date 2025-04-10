@@ -31,6 +31,7 @@ OBJ_PATH = .obj
 OBJ = $(addprefix $(OBJ_PATH)/, $(notdir $(SRC:.c=.o)))
 SRC_PATH = src
 SRC = $(addprefix $(SRC_PATH)/, main.c \
+								parse.c \
 								color_utils.c \
 								color_profiles.c \
 								render.c \

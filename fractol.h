@@ -25,7 +25,7 @@
 
 # define MLX_ERROR 1
 # define MAX_ITER 42
-# define SIN_LIMIT 100
+# define SIN_LIMIT 100000
 # define ZOOM 1.4
 # define COLOR_SHIFT 20
 
@@ -104,6 +104,16 @@ int		ft_free_all(t_data *mlx);
 void	ft_error(void);
 void	ft_control_help(void);
 
+//PARSE.C
+int		ft_parse_name(int argc, char **argv);
+void	ft_parse_fractal(t_data *mlx, char **argv);
+void	ft_valid_julia_args(char **argv);
+
+//INITS.C
+int		ft_init_mlx(t_data *mlx);
+void	ft_init_values(t_data *mlx);
+t_range	ft_range(double min, double max);
+
 //RENDER.C
 void	ft_draw_image(t_data *mlx);
 int		ft_render_frame(t_data *mlx);
@@ -151,11 +161,5 @@ double	ft_map(double to_scale, t_range old_scale, t_range new_scale);
 double	ft_squared(double n);
 double	ft_cubed(double n);
 double	ft_atod(char *str);
-
-//INITS.C
-int		ft_init_mlx(t_data *mlx);
-void	ft_init_values(t_data *mlx);
-t_range	ft_range(double min, double max);
-void	ft_parse_fractal(t_data *mlx, char **argv);
 
 #endif

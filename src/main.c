@@ -16,10 +16,10 @@
 int	main(int argc, char **argv)
 {
 	t_data	mlx;
+	int		output;
 
-	if ((argc == 2 && ft_strncmp(argv[1], "mandelbrot", 10) == 0)
-		|| (argc == 4 && ft_strncmp(argv[1], "julia", 5) == 0)
-		|| (argc == 2 && ft_strncmp(argv[1], "sin", 3) == 0))
+	output = ft_parse_name(argc, argv);
+	if (output == 1)
 	{
 		ft_parse_fractal(&mlx, argv);
 		ft_init_values(&mlx);
@@ -28,10 +28,13 @@ int	main(int argc, char **argv)
 		ft_event_handler(&mlx);
 		mlx_loop(mlx.connect);
 	}
-	else if (argc == 2 && ft_strncmp(argv[1], "help", 4) == 0)
+	else if (output == 2)
 		ft_control_help();
 	else
+	{
+		ft_printf("Wrong fractal name!\n\n");
 		ft_error();
+	}
 }
 
 int	ft_free_all(t_data *mlx)
@@ -50,7 +53,7 @@ void	ft_error(void)
 {
 	ft_printf("Valid fractal names are 'mandelbrot', 'julia' and 'sin'\n"
 		"Julia additionally requires 2 numbers,"
-		"recommended range {-2.0, 2.0}\n"
+		" recommended range {-2.0, 2.0}\n\n"
 		"There is information on controls the window header\n"
 		"For more detailed control list type ./fractol help\n");
 }
@@ -58,6 +61,7 @@ void	ft_error(void)
 void	ft_control_help(void)
 {
 	ft_printf(
+		"\n"
 		"     .: MOVE & ZOOM :.\n"
 		"WASD/ARROWS  -  moves the viewport\n"
 		"Scroll Up    -  zoom in\n"

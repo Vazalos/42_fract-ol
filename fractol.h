@@ -30,10 +30,6 @@
 # define COLOR_SHIFT 20
 
 # define BLACK	0xFF000000
-# define WHITE	0xFFFFFFFF
-# define RED	0xFFFF0000
-# define GREEN	0xFF00FF00
-# define BLUE	0xFF0000FF
 
 typedef struct s_range
 {

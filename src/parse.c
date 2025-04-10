@@ -12,14 +12,14 @@
 
 #include "../fractol.h"
 
-int ft_parse_name(int argc, char **argv)
+int	ft_parse_name(int argc, char **argv)
 {
-	if ((argc == 2 && ft_strncmp(argv[1], "mandelbrot", 10) == 0	
-		&& ft_strlen(argv[1]) == 10)
+	if ((argc == 2 && ft_strncmp(argv[1], "mandelbrot", 10) == 0
+			&& ft_strlen(argv[1]) == 10)
 		|| (argc == 4 && ft_strncmp(argv[1], "julia", 5) == 0
-		&& ft_strlen(argv[1]) == 5)
+			&& ft_strlen(argv[1]) == 5)
 		|| (argc == 2 && ft_strncmp(argv[1], "sin", 3) == 0
-		&& ft_strlen(argv[1]) == 3))
+			&& ft_strlen(argv[1]) == 3))
 	{
 		return (1);
 	}
@@ -87,4 +87,3 @@ void	ft_valid_julia_args(char **argv)
 		}
 	}
 }
-

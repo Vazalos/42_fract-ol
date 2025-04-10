@@ -31,7 +31,6 @@ int	ft_init_mlx(t_data *mlx)
 	return (0);
 }
 
-
 t_range	ft_range(double min, double max)
 {
 	t_range	r;
